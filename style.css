@@ -506,7 +506,7 @@ p#comment-notes{margin-bottom:2em}
 #respond div.yui-gf div.first{
 text-align:right;
 }
-#respond input.text,#respond textarea{
+#commentform input.text,#commentform textarea{
 margin-bottom:1em;
 background:#F5F5EC;
 border:1px solid #E3E2C9;
@@ -518,7 +518,7 @@ color:#636257;
 textarea#comment{
 line-height:1.7
 }
-#respond .form-label{
+#commentform .form-label{
 color:#979584;
 margin-bottom:0.35em;
 }
@@ -545,6 +545,14 @@ text-transform:uppercase;
 letter-spacing:0.1em;
 -moz-border-radius:0.25em;
 }
+
+.comment form#commentform{
+margin-top:1em;
+}
+#comments-list form#commentform .yui-u{
+border:none 0;
+}
+.comment p#comment-notes{display:none}
 
 #footer{
 clear:both;
