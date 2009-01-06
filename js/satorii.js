@@ -20,8 +20,6 @@ $(document).ready(function() {
 		
 	$('#comments-list .comment-meta').append(' <span class="meta-sep">|</span> <a class="reply" href="#reply">Reply</a>');
 	
-	$('textarea#comment').vertigro();
-	
 	$('.reply').click(function() {
 		var who = $(this).parents('.comment').children('.comment-author').children('.fn').text();
 		var where = $(this).parents('.comment').attr('id');
