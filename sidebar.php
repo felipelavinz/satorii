@@ -17,14 +17,6 @@
 
 				</ul>
 			</li>
-
-			<li id="archives">
-				<h3><?php _e( 'Archives', 'sandbox' ) ?></h3>
-				<ul>
-<?php wp_get_archives('type=monthly') ?>
-
-				</ul>
-			</li>
 <?php endif; // end primary sidebar widgets  ?>
 		</ul>
 	</div><!-- #primary .sidebar -->
@@ -69,6 +61,17 @@
 	<div id="terciary" class="sidebar yui-u">
 		<ul class="xoxo">
 	<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar(3) ) : // begin primary sidebar widgets ?>
+			<li id="calendar">
+				<?php get_calendar(); ?>
+			</li>
+
+			<li id="archives">
+				<h3><?php _e( 'Archives', 'sandbox' ) ?></h3>
+				<ul>
+<?php wp_get_archives('type=monthly') ?>
+
+				</ul>
+			</li>						
 	<?php endif; ?>
 		</ul>
 	</div>
