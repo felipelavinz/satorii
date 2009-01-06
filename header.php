@@ -14,7 +14,6 @@
 	<script type="text/javascript" src="<?php bloginfo('template_directory')?>/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php bloginfo('template_directory')?>/js/jquery.fancybox.yuic.js"></script>
 	<!--[if lt IE 7]><script src="<?php bloginfo('template_directory')?>/js/jquery.pngFix.pack.js" type="text/javascript"></script><![endif]-->
-	<?php if ( is_single() OR is_page() ) { ?><script type="text/javascript" src="<?php bloginfo('template_directory')?>/js/jquery.growfield.packed-1.1.js"></script><?php } ?>	
 	<script type="text/javascript" src="<?php bloginfo('template_directory')?>/js/satorii.js"></script>
 	
 	<?php wp_head() /* For plugins */?>
