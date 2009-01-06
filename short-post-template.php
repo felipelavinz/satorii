@@ -1,4 +1,4 @@
-			<div id="post-<?php the_ID() ?>" class="<?php sandbox_post_class() ?>">
+			<div id="post-<?php the_ID() ?>" class="<?php sandbox_post_class(); sticky_class(); ?>">
 				<h3 class="entry-title"><a href="<?php the_permalink() ?>" title="<?php printf( __( 'Permalink to %s', 'sandbox' ), the_title_attribute('echo=0') ) ?>" rel="bookmark"><?php the_title() ?></a> <span class="comments-link"><?php comments_popup_link( '0','1','%' ) ?></span> <?php edit_post_link( __('Edit', 'sandbox'), ' · <span class="edit-link">', '</span>');?></h3>
 				<div class="entry-content">
 <?php the_excerpt( __( 'Read More <span class="meta-nav">&raquo;</span>', 'sandbox' ) ) ?>
