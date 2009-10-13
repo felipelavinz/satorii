@@ -1,4 +1,4 @@
-$(document).ready(function() {
+jQuery(document).ready(function($) {
 	
 	$('div#content div[id^=post]').each(function() { 
 		var postId = $(this).attr('id');
