@@ -2,9 +2,9 @@
 THEME NAME: Satorii
 THEME URI: http://yukei.net
 DESCRIPTION: A minimalist theme with a strong focus on content
-VERSION: 1.0
-AUTHOR: <a href="http://felipe.lv">Felipe Lavin</a>
-AUTHOR URI: http://felipe.lv
+VERSION: 1.1
+AUTHOR: <a href="http://www.yukei.net">Felipe Lavin</a>
+AUTHOR URI: http://www.yukei.net
 TAGS: one-column, white, light, microformats
 */
 
@@ -231,6 +231,8 @@ font-size:93%;
 caption{
 text-transform:uppercase;
 text-align:left;
+
+
 letter-spacing:0.10em;
 font-weight:bold;
 }
@@ -286,14 +288,14 @@ padding-left:1em;
 #nav-above{
 display:none;
 }
-#nav-below{
+#nav-below, #nav-comments{
 background:#E1E0D0;
 border-top:2px solid #EBEADE;
 }
-#nav-below div:hover{
+#nav-below div:hover, #nav-comments div:hover{
 background:#ebeade;
 }
-#nav-below div{
+#nav-below div, #nav-comments div{
 padding:1% 0;
 }
 .nav-previous{
@@ -308,14 +310,14 @@ padding-left:2em;
 .nav-next .meta-nav{
 padding-right:2em;
 }
-#nav-below a{
+#nav-below a, #nav-comments div > a{
 color:#7A7A71;
 text-transform:uppercase;
 text-decoration:none;
 letter-spacing:0.1em;
 font-size:85%;
 }
-#nav-below a:hover{
+#nav-below a:hover, #nav-comments div > a:hover{
 color:#000;
 }
 #nav-images{
@@ -405,21 +407,23 @@ width:90%;
 margin:0 auto;
 }
 
-.comments ol li{
-display:block;
-list-style:none;
-}
 .comments ol{
 margin:0;
 }
-.comments li li{
+.comments ol li, .children > li.comment{
+display:block;
+list-style:none;
+}
+.comments li li, .children li li{
 display:list-item;
 list-style-type:square;
 }
-.comments ol ol{
+.comments ol ol, .comments ol ul, .comments ul ul{
 margin:1em;
 }
-
+.comments .children{
+margin:0 0 0 2em;
+}
 .leave-trackback{
 color:#979584;
 }
@@ -437,7 +441,9 @@ padding:1.5%;
 white-space:nowrap;
 background:#F5F5EC;
 border:1px solid #E3E2C9;
--moz-border-radius:0.25em;
+border-radius:0.25em;
+  -moz-border-radius:0.25em;
+  -webkit-border-radius:0.25em;
 }
 #trackbacks-list .trackback-text{
 font-size:85%;
@@ -494,6 +500,7 @@ color:#979584;
 .comment-text{
 line-height:1.5;
 }
+
 
 #respond{
 width:59.75%;
@@ -622,7 +629,9 @@ margin-bottom:0;
 margin-top:0.15em;
 color:#7D7C6E;
 }
-
+.gallery{
+  clear: both;
+}
 .gallery-item{
 width:33.2%;
 float:left;

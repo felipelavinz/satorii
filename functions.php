@@ -9,8 +9,24 @@ SANDBOX is distributed in the hope that it will be useful, but WITHOUT ANY WARRA
 You should have received a copy of the GNU General Public License along with SANDBOX. If not, see http://www.gnu.org/licenses/.
 */
 
+function satorii_globalnav(){
+	if ( function_exists('wp_nav_menu') ) {
+		wp_nav_menu( array(
+			'menu' => 'globalnav',
+			'container' => 'div',
+			'container_id' => 'menu',
+			'echo' => true,
+			'depth' => 1,
+			'theme_location' => 'globalnav',
+			'fallback_cb' => 'satorii_globalnav_fallback'
+		));
+	} else {
+		satorii_globalnav_fallback();
+	}
+}
+
 // Produces a list of pages in the header without whitespace
-function sandbox_globalnav() {
+function satorii_globalnav_fallback() {
 	if ( $menu = str_replace( array( "\r", "\n", "\t" ), '', wp_list_pages('title_li=&sort_column=menu_order&echo=0&depth=1') ) )
 		$menu = '<ul>' . $menu . '</ul>';
 	$menu = '<div id="menu">' . $menu . "</div>\n";
@@ -488,6 +504,108 @@ function sandbox_widgets_init() {
 	wp_register_widget_control( 'rss_links', __( 'RSS Links', 'sandbox' ), 'widget_sandbox_rsslinks_control' );
 }
 
+function satorii_list_comments($comment, $args, $depth) { // Enables threaded comments (WordPress 2.7 or higher) 
+	$GLOBALS['comment'] = $comment; ?>
+						<li id="comment-<?php comment_ID() ?>" class="<?php sandbox_comment_class() ?> yui-gf fw">
+							<div class="comment-author vcard yui-u first"><?php sandbox_commenter_link() ?></div>
+<?php if ($comment->comment_approved == '0') _e("\t\t\t\t\t<span class='unapproved'>Your comment is awaiting moderation.</span>\n", 'sandbox') ?>
+							<div class="yui-u">
+							<div class="comment-text"><?php comment_text() ?></div>
+							<div class="comment-meta"><?php printf(__('Posted %1$s at %2$s <span class="meta-sep">|</span> <a href="%3$s" title="Permalink to this comment">Permalink</a>', 'sandbox'),
+										get_comment_date(),
+										get_comment_time(),
+										'#comment-' . get_comment_ID() );
+										edit_comment_link(__('Edit', 'sandbox'), ' <span class="meta-sep">|</span> <span class="edit-link">', '</span>');
+										comment_reply_link(array_merge( $args, array('add_below' => 'comment', 'depth' => $depth, 'max_depth' => $args['max_depth'], 'before' => ' <span class="meta-sep">|</span> <span class="reply">', 'after' => '</span>'))) ?></div>
+							</div>
+						
+<?php } // REFERENCE: function satorii_list_comments()
+
+function satorii_list_pings($comment, $args, $depth) { // Uses the new functions (WP2.7) to display pingbacks and trackbacks, maybe useless, but with newer code
+	$GLOBALS['comment'] = $comment; ?>
+						<li id="comment-<?php comment_ID() ?>" >
+							<div class="comment-author"><?php printf(__('By %1$s on %2$s at %3$s', 'sandbox'),
+									get_comment_author_link(),
+									get_comment_date(),
+									get_comment_time() );
+									edit_comment_link(__('Edit', 'sandbox'), ' <span class="meta-sep">|</span> <span class="edit-link">', '</span>'); ?></div>
+<?php if ($comment->comment_approved == '0') _e('\t\t\t\t\t<span class="unapproved">Your trackback is awaiting moderation.</span>\n', 'sandbox') ?>
+							<div class="trackback-text"><?php comment_text() ?></div>
+<?php } // REFERENCE: function satorii_list_pings()
+
+/**
+ * Under these lines we're going to see if function
+ * get_previous_comments_link() exists (it exists since
+ * v2.7.1). If it doesn't, let's create it. The same
+ * for get_next_comments_link()
+ */
+if (!function_exists('get_previous_comments_link')):
+function get_previous_comments_link( $label = '' ) {
+	if ( !is_singular() )
+		return;
+
+	$page = get_query_var('cpage');
+
+	if ( intval($page) <= 1 )
+		return;
+
+	$prevpage = intval($page) - 1;
+
+	if ( empty($label) )
+		$label = __('&laquo; Older Comments');
+
+	return '<a href="' . clean_url( get_comments_pagenum_link( $prevpage ) ) . '" ' . apply_filters( 'previous_comments_link_attributes', '' ) . '>' . preg_replace('/&([^#])(?![a-z]{1,8};)/', '&#038;$1', $label) .'</a>';
+} //REFERENCE: function get_previous_comments_link( $label = '' )
+
+// Since get_next_comments_link() was created at the same time as the previous one...
+function get_next_comments_link( $label = '', $max_page = 0 ) {
+	global $wp_query;
+
+	if ( !is_singular() )
+		return;
+
+	$page = get_query_var('cpage');
+
+	$nextpage = intval($page) + 1;
+
+	if ( empty($max_page) )
+		$max_page = $wp_query->max_num_comment_pages;
+
+	if ( empty($max_page) )
+		$max_page = get_comment_pages_count();
+
+	if ( $nextpage > $max_page )
+		return;
+
+	if ( empty($label) )
+		$label = __('Newer Comments &raquo;');
+
+	return '<a href="' . clean_url( get_comments_pagenum_link( $nextpage, $max_page ) ) . '" ' . apply_filters( 'next_comments_link_attributes', '' ) . '>'. preg_replace('/&([^#])(?![a-z]{1,8};)/', '&#038;$1', $label) .'</a>';
+} //REFERENCE: function get_next_comments_link( $label = '', $max_page = 0 )
+
+endif; // REFERENCE: if (!function_exists('get_previous_comments_link'))
+
+function satorii_page_nav($echo=true){
+	global $post;
+	$ancestors_q = count($post->ancestors);
+	$urvater = ( $ancestors_q === 0 ) ? $post->ID : end($post->ancestors);
+	// If this is a top-level page, we'll show it's children; otherwhise we'll show
+	// current top-level forefather's children
+	$menu = substr(wp_list_pages('sort_column=menu_order&child_of=' . $post->ID .'&echo=0&title_li=<h3 class="page-links-title">' . get_the_title($post->ID) . '</h3>'), 20, -5);
+	$out = !empty($menu) ? '<div class="page-meta">'. $menu .'</div>' : null;
+	if ( $echo ) echo $out;
+	else return $out;
+}
+
+if ( function_exists( 'register_nav_menus') ) {
+	// Nav menus support for WP 3.0+
+	register_nav_menus( array(
+		'globalnav' => __('Main menu', 'sandbox')
+	));
+}
+
+
+
 // Translate, if applicable
 load_theme_textdomain('sandbox');
 
@@ -504,4 +622,5 @@ add_filter( 'archive_meta', 'convert_chars' );
 add_filter( 'archive_meta', 'wpautop' );
 
 // Remember: the Sandbox is for play.
+
 ?>
