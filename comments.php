@@ -29,26 +29,12 @@ foreach ( $comments as $comment )
 
 					<h3><?php printf($ping_count > 0 ? __('<span>%d</span> Trackbacks', 'sandbox') : __('<span>No</span> Trackbacks', 'sandbox'), $ping_count) ?></h3>
 						<?php if ( pings_open() ) { ?>
-							<p class="leave-trackback"><?php _e('You can leave a trackback using this <acronym title="Universal Resource Locator">URL</acronym>:'); ?> <span class="trackback-url"><?php trackback_url();?></span></p>
+							<p class="leave-trackback"><?php _e('You can leave a trackback using this <acronym title="Universal Resource Locator">URL</acronym>:', 'sandbox'); ?> <span class="trackback-url"><?php trackback_url();?></span></p>
 						<?php } ?>
 				<?php if ( $ping_count ) : ?>
 				<?php $sandbox_comment_alt = 0 ?>
 					<ol>
-<?php foreach ( $comments as $comment ) : ?>
-<?php if ( get_comment_type() != "comment" ) : ?>
-
-						<li id="comment-<?php comment_ID() ?>" class="<?php sandbox_comment_class() ?>">
-							<div class="comment-author"><?php printf(__('By %1$s on %2$s at %3$s', 'sandbox'),
-									get_comment_author_link(),
-									get_comment_date(),
-									get_comment_time() );
-									edit_comment_link(__('Edit', 'sandbox'), ' <span class="meta-sep">|</span> <span class="edit-link">', '</span>'); ?></div>
-<?php if ($comment->comment_approved == '0') _e('\t\t\t\t\t<span class="unapproved">Your trackback is awaiting moderation.</span>\n', 'sandbox') ?>
-							<div class="trackback-text"><?php comment_text() ?></div>
-						</li>
-<?php endif // REFERENCE: if ( get_comment_type() != "comment" ) ?>
-<?php endforeach; ?>
-
+<?php wp_list_comments('type=pings&callback=satorii_list_pings'); //list comments?>
 					</ol>
 <?php endif // REFERENCE: if ( $ping_count ) ?>
 				</div><!-- #trackbacks-list .comments -->
@@ -59,32 +45,23 @@ foreach ( $comments as $comment )
 <?php $sandbox_comment_alt = 0 ?>
 
 					<h3><?php printf($comment_count > 1 ? __('<span>%d</span> Comments', 'sandbox') : __('<span>One</span> Comment', 'sandbox'), $comment_count) ?></h3>
-
 					<ol>
-<?php foreach ($comments as $comment) : ?>
-<?php if ( get_comment_type() == "comment" ) : ?>
-						<li id="comment-<?php comment_ID() ?>" class="<?php sandbox_comment_class() ?> yui-gf fw">
-							<div class="comment-author vcard yui-u first"><?php sandbox_commenter_link() ?></div>
-<?php if ($comment->comment_approved == '0') _e("\t\t\t\t\t<span class='unapproved'>Your comment is awaiting moderation.</span>\n", 'sandbox') ?>
-							<div class="yui-u">
-							<div class="comment-text"><?php comment_text() ?></div>
-							<div class="comment-meta"><?php printf(__('Posted %1$s at %2$s <span class="meta-sep">|</span> <a href="%3$s" title="Permalink to this comment">Permalink</a>', 'sandbox'),
-										get_comment_date(),
-										get_comment_time(),
-										'#comment-' . get_comment_ID() );
-										edit_comment_link(__('Edit', 'sandbox'), ' <span class="meta-sep">|</span> <span class="edit-link">', '</span>'); ?></div>
-							</div>
-						</li>
-<?php endif; // REFERENCE: if ( get_comment_type() == "comment" ) ?>
-<?php endforeach; ?>
-
+<?php wp_list_comments('type=comment&callback=satorii_list_comments'); //list comments?>
 					</ol>
 				</div><!-- #comments-list .comments -->
 
 <?php endif; // REFERENCE: if ( $comment_count ) ?>
 				</div>
 
-<?php endif // REFERENCE: if ( $comments ) ?>
+
+<?php if ( get_previous_comments_link() || get_next_comments_link() ): ?>
+				<div id="nav-comments" class="navigation yui-g">
+					<div class="nav-previous yui-u first"><?php previous_comments_link($label=__('<span class="meta-nav">&laquo;</span> Previous Comments', 'sandbox')); ?></div>
+					<div class="nav-next yui-u"><?php next_comments_link($label=__('Next Comments <span class="meta-nav">&raquo;</span>', 'sandbox')); ?></div>
+				</div><!-- #nav-comments -->
+<?php endif; // REFERENCE: if ( $comments ) ?>
+
+<?php endif // REFERENCE: if ( !get_previous_comments_link() || !get_next_comments_link() ) ?>
 <?php if ( 'open' == $post->comment_status ) : ?>
 <?php $req = get_option('require_name_email'); // Checks if fields are required. Thanks, Adam. ;-) ?>
 
@@ -124,10 +101,11 @@ foreach ( $comments as $comment )
 <?php endif // REFERENCE: * if ( $user_ID ) ?>
 
 							<div class="yui-u" id="form-textarea">
+							<div class="cancel-comment-reply"><?php cancel_comment_reply_link() ?></div>
 							<div class="form-label"><label for="comment"><?php _e( 'Comment', 'sandbox' ) ?></label></div>
 							<div class="form-textarea"><textarea id="comment" name="comment" class="text required" cols="45" rows="8" tabindex="6"></textarea></div>
 
-							<div class="form-submit"><input id="submit" name="submit" class="button" type="submit" value="<?php _e( 'Post Comment', 'sandbox' ) ?>" tabindex="7" /><input type="hidden" name="comment_post_ID" value="<?php echo $id ?>" /></div>
+							<div class="form-submit"><input id="submit" name="submit" class="button" type="submit" value="<?php _e( 'Post Comment', 'sandbox' ) ?>" tabindex="7" /><?php comment_id_fields(); ?></div>
 							</div>
 							</div>
 
@@ -138,6 +116,7 @@ foreach ( $comments as $comment )
 <?php endif // REFERENCE: if ( get_option('comment_registration') && !$user_ID ) ?>
 
 				</div><!-- #respond -->
+
 <?php endif // REFERENCE: if ( 'open' == $post->comment_status ) ?>
 
 			</div><!-- #comments -->
