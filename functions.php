@@ -1,4 +1,7 @@
 <?php
+
+define( 'TEMPLATE_URL', get_template_directory_uri() );
+
 /*
 This file is part of SANDBOX.
 
