@@ -511,7 +511,7 @@ function sandbox_widgets_init() {
 
 function satorii_list_comments($comment, $args, $depth) { // Enables threaded comments (WordPress 2.7 or higher)
 	$GLOBALS['comment'] = $comment; ?>
-						<li id="comment-<?php comment_ID() ?>" class="<?php sandbox_comment_class() ?> yui-gf fw">
+						<li id="comment-<?php comment_ID() ?>" <?php comment_class('yui-gf fw') ?>>
 							<div class="comment-author vcard yui-u first"><?php sandbox_commenter_link() ?></div>
 <?php if ($comment->comment_approved == '0') _e("\t\t\t\t\t<span class='unapproved'>Your comment is awaiting moderation.</span>\n", 'sandbox') ?>
 							<div class="yui-u">
