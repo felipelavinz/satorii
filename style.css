@@ -2,10 +2,12 @@
 THEME NAME: Satorii
 THEME URI: http://yukei.net
 DESCRIPTION: A minimalist theme with a strong focus on content
-VERSION: 1.1
+VERSION: 1.5
 AUTHOR: <a href="http://www.yukei.net">Felipe Lavin</a>
 AUTHOR URI: http://www.yukei.net
 TAGS: one-column, white, light, microformats
+License: GNU General Public License
+License URI: LICENSE.txt
 */
 
 @import url(css/reset-fonts-grids.css);
