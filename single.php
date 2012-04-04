@@ -10,14 +10,14 @@
 				<div class="nav-next yui-u"><?php next_post_link( '%link', '%title <span class="meta-nav">&raquo;</span>' ) ?></div>
 			</div>
 
-			<div id="post-<?php the_ID() ?>" class="<?php sandbox_post_class() ?>">
+			<div id="post-<?php the_ID() ?>" <?php post_class() ?>>
 				<h2 class="entry-title"><?php the_title() ?></h2>
 				<div class="entry-content">
 <?php the_content() ?>
 <?php wp_link_pages('before=<div class="page-link">' . __( 'Pages:', 'sandbox' ) . '&after=</div>') ?>
 <?php the_tags( __( '<p class="tag-links"><span>Tagged:</span> ', 'sandbox' ), ', ', '</p>') ?>
 				</div>
-				
+
 				<dl class="entry-meta">
 					<dt><?php _e('Published:', 'sandbox')?></dt>
 						<dd class="entry_date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php unset($previousday); printf( __( '%1$s &#8211; %2$s', 'sandbox' ), the_date( '', '', '', false ), get_the_time() ) ?></abbr></dd>
@@ -38,7 +38,7 @@
 						</dd>
 					<?php edit_post_link( __('Edit this post', 'sandbox'), __('<dt>Edit</dt><dd class="edit-link">', 'sandbox'), '</dd>');?>
 				</dl>
-				
+
 				<!-- <?php trackback_rdf(); ?> -->
 			</div><!-- .post -->
 

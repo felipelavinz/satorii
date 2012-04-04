@@ -21,7 +21,7 @@
 	<?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); /* Threaded comments */?>
 	<?php wp_head() /* For plugins */?>
 </head>
-<body class="<?php sandbox_body_class() ?>">
+<body <?php body_class() ?>>
 
 <div id="wrapper" class="hfeed">
 	<div id="inner-wrap">
