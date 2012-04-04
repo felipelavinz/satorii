@@ -215,6 +215,11 @@ body.attachment #header {
 	font-size: 85%;
 }
 
+.attachment .entry-meta{
+	clear: both;
+	float: none;
+}
+
 h3.page-links-title {
 	padding-left: 1em;
 }
