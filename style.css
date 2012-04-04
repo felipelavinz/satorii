@@ -24,7 +24,7 @@ ul li{list-style-type:square;}
 
 .skip-link{
 display:none;
-}	
+}
 
 #header,#access{
 width:80%;
@@ -209,6 +209,9 @@ font-size:85%;
 background:url(img/mini_icons2/tag.gif) left no-repeat;
 padding-left:13px;
 }
+.tag-links{
+	clear: both;
+}
 .archive .cat-links,.search .cat-links{
 background-image:url(img/mini_icons2/folder.gif);
 margin-bottom:0.5em;
@@ -242,7 +245,7 @@ border:none;
 tr.odd{
 border:1px solid #EBE5D9;
 border-width:1px 0;
-background:#F7F4EE;	
+background:#F7F4EE;
 }
 th{
 background:#f7f4ee;
@@ -351,7 +354,7 @@ padding-top:2em;
 border-top:2px solid #F0EED4;
 font-size:93%;
 line-height:1.5;
-}	
+}
 .xoxo li{
 list-style:none;
 margin-bottom:2em;
