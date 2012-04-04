@@ -309,6 +309,7 @@ function sandbox_commenter_link() {
 // Function to filter the default gallery shortcode
 function sandbox_gallery($attr) {
 	global $post;
+
 	if ( isset($attr['orderby']) ) {
 		$attr['orderby'] = sanitize_sql_orderby($attr['orderby']);
 		if ( !$attr['orderby'] )
@@ -325,6 +326,7 @@ function sandbox_gallery($attr) {
 		'size'       => 'thumbnail',
 	), $attr ));
 
+	$i            =  0;
 	$id           =  intval($id);
 	$orderby      =  addslashes($orderby);
 	$attachments  =  get_children("post_parent=$id&post_type=attachment&post_mime_type=image&orderby={$orderby}");
@@ -339,7 +341,7 @@ function sandbox_gallery($attr) {
 		return $output;
 	}
 
-	$listtag     =  tag_escape($listtag);
+	$listtag     =  !empty($listtag) ? tag_escape($listtag) : null;
 	$itemtag     =  tag_escape($itemtag);
 	$captiontag  =  tag_escape($captiontag);
 	$columns     =  intval($columns);
@@ -372,7 +374,7 @@ function sandbox_gallery($attr) {
 
 	return $output;
 }
- 
+
 // Widget: Search; to match the Sandbox style and replace Widget plugin default
 function widget_sandbox_search($args) {
 	extract($args);
@@ -507,7 +509,7 @@ function sandbox_widgets_init() {
 	wp_register_widget_control( 'rss_links', __( 'RSS Links', 'sandbox' ), 'widget_sandbox_rsslinks_control' );
 }
 
-function satorii_list_comments($comment, $args, $depth) { // Enables threaded comments (WordPress 2.7 or higher) 
+function satorii_list_comments($comment, $args, $depth) { // Enables threaded comments (WordPress 2.7 or higher)
 	$GLOBALS['comment'] = $comment; ?>
 						<li id="comment-<?php comment_ID() ?>" class="<?php sandbox_comment_class() ?> yui-gf fw">
 							<div class="comment-author vcard yui-u first"><?php sandbox_commenter_link() ?></div>
@@ -521,7 +523,7 @@ function satorii_list_comments($comment, $args, $depth) { // Enables threaded co
 										edit_comment_link(__('Edit', 'sandbox'), ' <span class="meta-sep">|</span> <span class="edit-link">', '</span>');
 										comment_reply_link(array_merge( $args, array('add_below' => 'comment', 'depth' => $depth, 'max_depth' => $args['max_depth'], 'before' => ' <span class="meta-sep">|</span> <span class="reply">', 'after' => '</span>'))) ?></div>
 							</div>
-						
+
 <?php } // REFERENCE: function satorii_list_comments()
 
 function satorii_list_pings($comment, $args, $depth) { // Uses the new functions (WP2.7) to display pingbacks and trackbacks, maybe useless, but with newer code
