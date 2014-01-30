@@ -1,6 +1,7 @@
 <?php
 	if ( 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']) )
 		die ( 'Please do not load this page directly. Thanks.' );
+	$ping_count = $comment_count = 0;
 ?>
 			<div id="comments">
 <?php
@@ -18,7 +19,6 @@ endif;
 <?php global $sandbox_comment_alt ?>
 
 <?php // Number of pings and comments
-$ping_count = $comment_count = 0;
 foreach ( $comments as $comment )
 	get_comment_type() == "comment" ? ++$comment_count : ++$ping_count;
 ?>
@@ -38,7 +38,7 @@ foreach ( $comments as $comment )
 					</ol>
 <?php endif // REFERENCE: if ( $ping_count ) ?>
 				</div><!-- #trackbacks-list .comments -->
-				
+
 				<div id="comments-list" class="comments yui-u">
 
 <?php if ( $comment_count ) : ?>
@@ -73,7 +73,7 @@ foreach ( $comments as $comment )
 					get_bloginfo('wpurl') . '/wp-login.php?redirect_to=' . get_permalink() ) ?></p>
 
 <?php else : ?>
-					<div class="formcontainer">	
+					<div class="formcontainer">
 						<form id="commentform" action="<?php bloginfo('wpurl') ?>/wp-comments-post.php" method="post">
 
 <?php if ( $user_ID ) : ?>
