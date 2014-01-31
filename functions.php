@@ -614,14 +614,11 @@ if ( function_exists( 'register_nav_menus') ) {
 
 
 
-// Translate, if applicable
-load_theme_textdomain('satorii');
-
 // Runs our code at the end to check that everything needed has loaded
 add_action( 'init', 'sandbox_widgets_init' );
 
 // Registers our function to filter default gallery shortcode
-add_filter( 'post_gallery', 'sandbox_gallery', $attr );
+add_filter( 'post_gallery', 'sandbox_gallery' );
 
 // Adds filters for the description/meta content in archives.php
 add_filter( 'archive_meta', 'wptexturize' );
@@ -629,6 +626,51 @@ add_filter( 'archive_meta', 'convert_smilies' );
 add_filter( 'archive_meta', 'convert_chars' );
 add_filter( 'archive_meta', 'wpautop' );
 
-// Remember: the Sandbox is for play.
+/**
+ * Theme controller
+ * Manage actions, filters and custom functions
+ */
+class satorii{
+	private static $instance;
+	private $template_uri;
+	const theme_ver = 1.5;
+	private function __construct(){
+		$this->setup_hooks();
+		$this->template_uri = get_stylesheet_directory_uri();
+	}
+	public static function get_instance(){
+		if ( !isset(self::$instance) ){
+			$c = __CLASS__;
+			self::$instance = new $c;
+		}
+		return self::$instance;
+	}
+	public function __clone(){
+		trigger_error('Clone is not allowed.', E_USER_ERROR);
+	}
+	public function __get( $key ){
+		return isset( $this->$key ) ? $this->$key : null;
+	}
+	public function setup_hooks(){
+		add_action( 'after_setup_theme', array($this, 'setup_theme') );
+		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_assets') );
+	}
+	public function setup_theme(){
+		// Translate, if applicable
+		load_theme_textdomain( 'satorii', dirname( __FILE__ ) .'/translation' );
+	}
+	public function enqueue_assets(){
+		// enqueue styles
+		wp_enqueue_style( 'yui-reset-fonts-grids', $this->template_uri .'/css/reset-fonts-grids.css', array(), '2.5.1', 'all' );
+		wp_enqueue_style( 'yui-base', $this->template_uri .'/css/base-min.css', array('yui-reset-fonts-grids'), '2.5.1', 'all' );
+		wp_enqueue_style( 'satorii', get_stylesheet_uri(), array('yui-reset-fonts-grids', 'yui-base'), self::theme_ver, 'all' );
+		wp_enqueue_style( 'fancybox-css', $this->template_uri .'/css/jquery.fancybox-1.3.4.css', array(), '1.3.4', 'screen' );
 
-?>
+		// ... aaand scripts
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'fancybox', $this->template_uri .'/js/jquery.fancybox-1.3.4.pack.js', array('jquery'), '1.3.4', true );
+		wp_enqueue_script( 'satorii-js', $this->template_uri .'/js/satorii.js', array('jquery', 'fancybox'), self::theme_ver, true );
+	}
+}
+// Instantiate the class object
+$satorii = satorii::get_instance();
