@@ -17,20 +17,20 @@ Template Name: Archives Page
 
 				<div class="yui-g">
 					<div class="yui-u first" id="category-archives">
-							<h3><?php _e( 'Archives by Category', 'sandbox' ) ?></h3>
+							<h3><?php _e( 'Archives by Category', 'satorii' ) ?></h3>
 							<ul>
-								<?php wp_list_categories('optioncount=1&title_li=&show_count=1') ?> 
+								<?php wp_list_categories('optioncount=1&title_li=&show_count=1') ?>
 							</ul>
 					</div>
 					<div class="yui-u" id="monthly-archives">
-							<h3><?php _e( 'Archives by Month', 'sandbox' ) ?></h3>
+							<h3><?php _e( 'Archives by Month', 'satorii' ) ?></h3>
 							<ul>
 								<?php wp_get_archives('type=monthly&show_post_count=1') ?>
 							</ul>
 					</div>
 				</div>
-				
-<?php edit_post_link( __( 'Edit', 'sandbox' ), '<span class="edit-link">', '</span>' ) ?>
+
+<?php edit_post_link( __( 'Edit', 'satorii' ), '<span class="edit-link">', '</span>' ) ?>
 
 				</div>
 			</div><!-- .post -->

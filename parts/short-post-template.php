@@ -1,16 +1,16 @@
 			<div id="post-<?php the_ID() ?>" <?php post_class();?>>
-				<h3 class="entry-title"><a href="<?php the_permalink() ?>" title="<?php printf( __( 'Permalink to %s', 'sandbox' ), the_title_attribute('echo=0') ) ?>" rel="bookmark"><?php the_title() ?></a> <span class="comments-link"><?php comments_popup_link( '0','1','%' ) ?></span> <?php edit_post_link( __('Edit', 'sandbox'), ' · <span class="edit-link">', '</span>');?></h3>
+				<h3 class="entry-title"><a href="<?php the_permalink() ?>" title="<?php printf( __( 'Permalink to %s', 'satorii' ), the_title_attribute('echo=0') ) ?>" rel="bookmark"><?php the_title() ?></a> <span class="comments-link"><?php comments_popup_link( '0','1','%' ) ?></span> <?php edit_post_link( __('Edit', 'satorii'), ' · <span class="edit-link">', '</span>');?></h3>
 				<div class="entry-content">
-<?php the_excerpt( __( 'Read More <span class="meta-nav">&raquo;</span>', 'sandbox' ) ) ?>
-				<?php if ( $post->post_type == 'post' ) { ?><p class="cat-links"><span><?php _e('Categories:', 'sandbox')?></span> <?php the_category(',') ?></p><?php } ?>
-				<?php the_tags( __( '<p class="tag-links"><span>Tagged:</span> ', 'sandbox' ), ', ', '</p>') ?>
+<?php the_excerpt( __( 'Read More <span class="meta-nav">&raquo;</span>', 'satorii' ) ) ?>
+				<?php if ( $post->post_type == 'post' ) { ?><p class="cat-links"><span><?php _e('Categories:', 'satorii')?></span> <?php the_category(',') ?></p><?php } ?>
+				<?php the_tags( __( '<p class="tag-links"><span>Tagged:</span> ', 'satorii' ), ', ', '</p>') ?>
 				</div>
 				<?php if ( $post->post_type == 'post') { ?>
 				<dl class="entry-meta">
-					<dt><?php _e('Published:', 'sandbox')?></dt>
-						<dd class="entry_date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php unset($previousday); printf( __( '%1$s &#8211; %2$s', 'sandbox' ), the_date( '', '', '', false ), get_the_time() ) ?></abbr></dd>
-					<dt><?php _e('Author:', 'sandbox')?></dt>
-						<dd class="author vcard"><?php printf( __( 'By %s', 'sandbox' ), '<a class="url fn n" href="' . get_author_posts_url( $post->post_author ) . '" title="' . sprintf( __( 'View all posts by %s', 'sandbox' ), get_the_author() ) . '">' . get_the_author() . '</a>' ) ?></dd>
+					<dt><?php _e('Published:', 'satorii')?></dt>
+						<dd class="entry_date"><abbr class="published" title="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php unset($previousday); printf( __( '%1$s &#8211; %2$s', 'satorii' ), the_date( '', '', '', false ), get_the_time() ) ?></abbr></dd>
+					<dt><?php _e('Author:', 'satorii')?></dt>
+						<dd class="author vcard"><?php printf( __( 'By %s', 'satorii' ), '<a class="url fn n" href="' . get_author_posts_url( $post->post_author ) . '" title="' . sprintf( __( 'View all posts by %s', 'satorii' ), get_the_author() ) . '">' . get_the_author() . '</a>' ) ?></dd>
 				</dl>
 				<?php } ?>
 			</div><!-- .post -->
