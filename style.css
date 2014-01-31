@@ -3,16 +3,12 @@ THEME NAME: Satorii
 THEME URI: http://yukei.net
 DESCRIPTION: A minimalist theme with a strong focus on content
 VERSION: 1.5
-AUTHOR: <a href="http://www.yukei.net">Felipe Lavin</a>
+AUTHOR: Felipe Lavin Z.
 AUTHOR URI: http://www.yukei.net
 TAGS: one-column, white, light, microformats
 License: GNU General Public License
 License URI: LICENSE.txt
 */
-
-@import url(css/reset-fonts-grids.css);
-
-@import url(css/base-min.css);
 
 /**
  * CSS Sticky footer -- from cssstickyfooter.com
@@ -23,19 +19,21 @@ html, body {
 
 #wrapper {
 	min-height: 100%;
+	margin-bottom: -4.9em;
+	background: #eeeedc;
+}
+
+#wrapper:after{
+	content: '';
+	display: block;
+}
+
+#footer, #wrapper:after{
+	height: 4.9em;
 }
 
 #inner-wrap {
-	overflow: auto;
-	padding-bottom: 4.846em;
-}
-
-body:before {
-	content: '';
-	height: 100%;
-	float: left;
-	width: 0;
-	margin-top: -32767px;
+	background: #fff;
 }
 
 body {
@@ -123,9 +121,10 @@ h2.entry-title,#blog-title a,h2.page-title,h3.entry-title {
 	color: #555;
 }
 
-.post,#content .page {
+.post, #content .page {
 	clear: both;
-	margin: 1em auto 3em;
+	margin: 1em auto 0;
+	padding-bottom: 3em;
 	overflow: hidden;
 	width: 50em;
 }
@@ -135,6 +134,9 @@ h2.entry-title,#blog-title a,h2.page-title,h3.entry-title {
 	border: solid #eee;
 	border-width: 5px 0;
 	padding-bottom: 0.8em;
+}
+.sticky + .sticky{
+	margin-top: -5px;
 }
 
 .sticky h2.entry-title a {
@@ -217,7 +219,7 @@ body.attachment #header {
 	font-size: 85%;
 }
 
-.attachment .entry-meta{
+.attachment .entry-meta, .entry-content .page-link{
 	clear: both;
 	float: none;
 }
@@ -320,6 +322,10 @@ h3.page-links-title {
 
 table {
 	font-size: 93%;
+}
+
+.entry-content table{
+	width: 100%;
 }
 
 caption {
@@ -580,8 +586,6 @@ body.attachment div.entry-caption,body.attachment .entry-content p {
 	background: #F5F5EC;
 	border: 1px solid #E3E2C9;
 	border-radius: 0.25em;
-	-moz-border-radius: 0.25em;
-	-webkit-border-radius: 0.25em;
 }
 
 #trackbacks-list .trackback-text {
@@ -685,7 +689,7 @@ p#comment-notes {
 	border: 1px solid #E3E2C9;
 	width: 95%;
 	padding: 3px;
-	-moz-border-radius: 0.25em;
+	border-radius: 0.25em;
 	color: #636257;
 }
 
@@ -720,7 +724,7 @@ textarea#comment {
 	font-size: 85%;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
-	-moz-border-radius: 0.25em;
+	border-radius: 0.25em;
 }
 
 .comment form#commentform {
@@ -738,7 +742,7 @@ textarea#comment {
 #footer {
 	clear: both;
 	position: relative;
-	margin-top: -5.7em;
+	margin-top: -5.5em;
 	height: 1.7em;
 	padding: 2em;
 	color: #979584;
@@ -760,6 +764,10 @@ textarea#comment {
 }
 
 /* styles for wordpress-generated classes */
+.entry-content img{
+	max-width: 100%;
+	height: auto;
+}
 .aligncenter,div.aligncenter,img[align="center"],.postimgfull {
 	display: block;
 	margin: 1em auto;
@@ -797,16 +805,21 @@ textarea#comment {
 	text-align: center;
 	font-size: 85%;
 	padding: 0.5em 0.15em 0.15em;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-khtml-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.entry-content .wp-caption{
+	max-width: 98%;
 }
 
 .wp-caption img {
 	margin: 0;
 	padding: 0;
 	border: 0 none;
+}
+
+.entry-content .wp-caption img{
+	max-width: 100%;
 }
 
 .wp-caption-text {
