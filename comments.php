@@ -6,7 +6,7 @@
 			<div id="comments">
 <?php
 	if ( !empty($post->post_password) ) :
-		if ( $_COOKIE['wp-postpass_' . COOKIEHASH] != $post->post_password ) :
+		if ( isset($_COOKIE['wp-postpass_' . COOKIEHASH]) && $_COOKIE['wp-postpass_' . COOKIEHASH] != $post->post_password ) :
 ?>
 				<div class="nopassword"><?php _e( 'This post is protected. Enter the password to view any comments.', 'sandbox' ) ?></div>
 			</div><!-- .comments -->
