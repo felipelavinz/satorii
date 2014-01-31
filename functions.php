@@ -382,8 +382,8 @@ function sandbox_gallery($attr) {
 function widget_sandbox_search($args) {
 	extract($args);
 	$options = get_option('widget_sandbox_search');
-	$title = empty($options['title']) ? __( 'Search', 'sandbox' ) : esc_attr($options['title']);
-	$button = empty($options['button']) ? __( 'Find', 'sandbox' ) : esc_attr($options['button']);
+	$title = empty($options['title']) ? __( 'Search', 'satorii' ) : esc_attr($options['title']);
+	$button = empty($options['button']) ? __( 'Find', 'satorii' ) : esc_attr($options['button']);
 ?>
 			<?php echo $before_widget ?>
 				<?php echo $before_title ?><label for="s"><?php echo $title ?></label><?php echo $after_title ?>
@@ -411,8 +411,8 @@ function widget_sandbox_search_control() {
 	$title = esc_attr($options['title']);
 	$button = esc_attr($options['button']);
 ?>
-	<p><label for="search-title"><?php _e( 'Title:', 'sandbox' ) ?> <input class="widefat" id="search-title" name="search-title" type="text" value="<?php echo $title; ?>" /></label></p>
-	<p><label for="search-button"><?php _e( 'Button Text:', 'sandbox' ) ?> <input class="widefat" id="search-button" name="search-button" type="text" value="<?php echo $button; ?>" /></label></p>
+	<p><label for="search-title"><?php _e( 'Title:', 'satorii' ) ?> <input class="widefat" id="search-title" name="search-title" type="text" value="<?php echo $title; ?>" /></label></p>
+	<p><label for="search-button"><?php _e( 'Button Text:', 'satorii' ) ?> <input class="widefat" id="search-button" name="search-button" type="text" value="<?php echo $button; ?>" /></label></p>
 	<input type="hidden" id="search-submit" name="search-submit" value="1" />
 <?php
 }
@@ -421,7 +421,7 @@ function widget_sandbox_search_control() {
 function widget_sandbox_meta($args) {
 	extract($args);
 	$options = get_option('widget_meta');
-	$title = empty($options['title']) ? __( 'Meta', 'sandbox' ) : esc_attr($options['title']);
+	$title = empty($options['title']) ? __( 'Meta', 'satorii' ) : esc_attr($options['title']);
 ?>
 			<?php echo $before_widget; ?>
 				<?php echo $before_title . $title . $after_title; ?>
@@ -440,13 +440,13 @@ function widget_sandbox_meta($args) {
 function widget_sandbox_rsslinks($args) {
 	extract($args);
 	$options = get_option('widget_sandbox_rsslinks');
-	$title = empty($options['title']) ? __( 'RSS Links', 'sandbox' ) : esc_attr($options['title']);
+	$title = empty($options['title']) ? __( 'RSS Links', 'satorii' ) : esc_attr($options['title']);
 ?>
 		<?php echo $before_widget; ?>
 			<?php echo $before_title . $title . $after_title; ?>
 			<ul>
-				<li><a href="<?php bloginfo('rss2_url') ?>" title="<?php echo esc_html( get_bloginfo('name'), 1 ) ?> <?php _e( 'Posts RSS feed', 'sandbox' ); ?>" rel="alternate" type="application/rss+xml"><?php _e( 'All posts', 'sandbox' ) ?></a></li>
-				<li><a href="<?php bloginfo('comments_rss2_url') ?>" title="<?php echo esc_html(bloginfo('name'), 1) ?> <?php _e( 'Comments RSS feed', 'sandbox' ); ?>" rel="alternate" type="application/rss+xml"><?php _e( 'All comments', 'sandbox' ) ?></a></li>
+				<li><a href="<?php bloginfo('rss2_url') ?>" title="<?php echo esc_html( get_bloginfo('name'), 1 ) ?> <?php _e( 'Posts RSS feed', 'satorii' ); ?>" rel="alternate" type="application/rss+xml"><?php _e( 'All posts', 'satorii' ) ?></a></li>
+				<li><a href="<?php bloginfo('comments_rss2_url') ?>" title="<?php echo esc_html(bloginfo('name'), 1) ?> <?php _e( 'Comments RSS feed', 'satorii' ); ?>" rel="alternate" type="application/rss+xml"><?php _e( 'All comments', 'satorii' ) ?></a></li>
 			</ul>
 		<?php echo $after_widget; ?>
 <?php
@@ -464,7 +464,7 @@ function widget_sandbox_rsslinks_control() {
 	}
 	$title = esc_attr($options['title']);
 ?>
-	<p><label for="rsslinks-title"><?php _e( 'Title:', 'sandbox' ) ?> <input class="widefat" id="rsslinks-title" name="rsslinks-title" type="text" value="<?php echo $title; ?>" /></label></p>
+	<p><label for="rsslinks-title"><?php _e( 'Title:', 'satorii' ) ?> <input class="widefat" id="rsslinks-title" name="rsslinks-title" type="text" value="<?php echo $title; ?>" /></label></p>
 	<input type="hidden" id="rsslinks-submit" name="rsslinks-submit" value="1" />
 <?php
 }
@@ -490,40 +490,40 @@ function sandbox_widgets_init() {
 		'classname'    =>  'widget_search',
 		'description'  =>  __( "A search form for your blog (Sandbox)", "sandbox" )
 	);
-	wp_register_sidebar_widget( 'search', __( 'Search', 'sandbox' ), 'widget_sandbox_search', $widget_ops );
+	wp_register_sidebar_widget( 'search', __( 'Search', 'satorii' ), 'widget_sandbox_search', $widget_ops );
 	wp_unregister_widget_control('search'); // We're being Sandbox-specific; remove WP default
-	wp_register_widget_control( 'search', __( 'Search', 'sandbox' ), 'widget_sandbox_search_control' );
+	wp_register_widget_control( 'search', __( 'Search', 'satorii' ), 'widget_sandbox_search_control' );
 
 	// Sandbox Meta widget
 	$widget_ops = array(
 		'classname'    =>  'widget_meta',
 		'description'  =>  __( "Log in/out and administration links (Sandbox)", "sandbox" )
 	);
-	wp_register_sidebar_widget( 'meta', __( 'Meta', 'sandbox' ), 'widget_sandbox_meta', $widget_ops );
+	wp_register_sidebar_widget( 'meta', __( 'Meta', 'satorii' ), 'widget_sandbox_meta', $widget_ops );
 	wp_unregister_widget_control('meta'); // We're being Sandbox-specific; remove WP default
-	wp_register_widget_control( 'meta', __( 'Meta', 'sandbox' ), 'wp_widget_meta_control' );
+	wp_register_widget_control( 'meta', __( 'Meta', 'satorii' ), 'wp_widget_meta_control' );
 
 	//Sandbox RSS Links widget
 	$widget_ops = array(
 		'classname'    =>  'widget_rss_links',
 		'description'  =>  __( "RSS links for both posts and comments (Sandbox)", "sandbox" )
 	);
-	wp_register_sidebar_widget( 'rss_links', __( 'RSS Links', 'sandbox' ), 'widget_sandbox_rsslinks', $widget_ops );
-	wp_register_widget_control( 'rss_links', __( 'RSS Links', 'sandbox' ), 'widget_sandbox_rsslinks_control' );
+	wp_register_sidebar_widget( 'rss_links', __( 'RSS Links', 'satorii' ), 'widget_sandbox_rsslinks', $widget_ops );
+	wp_register_widget_control( 'rss_links', __( 'RSS Links', 'satorii' ), 'widget_sandbox_rsslinks_control' );
 }
 
 function satorii_list_comments($comment, $args, $depth) { // Enables threaded comments (WordPress 2.7 or higher)
 	$GLOBALS['comment'] = $comment; ?>
 						<li id="comment-<?php comment_ID() ?>" <?php comment_class('yui-gf fw') ?>>
 							<div class="comment-author vcard yui-u first"><?php sandbox_commenter_link() ?></div>
-<?php if ($comment->comment_approved == '0') _e("\t\t\t\t\t<span class='unapproved'>Your comment is awaiting moderation.</span>\n", 'sandbox') ?>
+<?php if ($comment->comment_approved == '0') _e("\t\t\t\t\t<span class='unapproved'>Your comment is awaiting moderation.</span>\n", 'satorii') ?>
 							<div class="yui-u">
 							<div class="comment-text"><?php comment_text() ?></div>
-							<div class="comment-meta"><?php printf(__('Posted %1$s at %2$s <span class="meta-sep">|</span> <a href="%3$s" title="Permalink to this comment">Permalink</a>', 'sandbox'),
+							<div class="comment-meta"><?php printf(__('Posted %1$s at %2$s <span class="meta-sep">|</span> <a href="%3$s" title="Permalink to this comment">Permalink</a>', 'satorii'),
 										get_comment_date(),
 										get_comment_time(),
 										'#comment-' . get_comment_ID() );
-										edit_comment_link(__('Edit', 'sandbox'), ' <span class="meta-sep">|</span> <span class="edit-link">', '</span>');
+										edit_comment_link(__('Edit', 'satorii'), ' <span class="meta-sep">|</span> <span class="edit-link">', '</span>');
 										comment_reply_link(array_merge( $args, array('add_below' => 'comment', 'depth' => $depth, 'max_depth' => $args['max_depth'], 'before' => ' <span class="meta-sep">|</span> <span class="reply">', 'after' => '</span>'))) ?></div>
 							</div>
 
@@ -532,12 +532,12 @@ function satorii_list_comments($comment, $args, $depth) { // Enables threaded co
 function satorii_list_pings($comment, $args, $depth) { // Uses the new functions (WP2.7) to display pingbacks and trackbacks, maybe useless, but with newer code
 	$GLOBALS['comment'] = $comment; ?>
 						<li id="comment-<?php comment_ID() ?>" >
-							<div class="comment-author"><?php printf(__('By %1$s on %2$s at %3$s', 'sandbox'),
+							<div class="comment-author"><?php printf(__('By %1$s on %2$s at %3$s', 'satorii'),
 									get_comment_author_link(),
 									get_comment_date(),
 									get_comment_time() );
-									edit_comment_link(__('Edit', 'sandbox'), ' <span class="meta-sep">|</span> <span class="edit-link">', '</span>'); ?></div>
-<?php if ($comment->comment_approved == '0') _e('\t\t\t\t\t<span class="unapproved">Your trackback is awaiting moderation.</span>\n', 'sandbox') ?>
+									edit_comment_link(__('Edit', 'satorii'), ' <span class="meta-sep">|</span> <span class="edit-link">', '</span>'); ?></div>
+<?php if ($comment->comment_approved == '0') _e('\t\t\t\t\t<span class="unapproved">Your trackback is awaiting moderation.</span>\n', 'satorii') ?>
 							<div class="trackback-text"><?php comment_text() ?></div>
 <?php } // REFERENCE: function satorii_list_pings()
 
@@ -608,14 +608,14 @@ function satorii_page_nav($echo=true){
 if ( function_exists( 'register_nav_menus') ) {
 	// Nav menus support for WP 3.0+
 	register_nav_menus( array(
-		'globalnav' => __('Main menu', 'sandbox')
+		'globalnav' => __('Main menu', 'satorii')
 	));
 }
 
 
 
 // Translate, if applicable
-load_theme_textdomain('sandbox');
+load_theme_textdomain('satorii');
 
 // Runs our code at the end to check that everything needed has loaded
 add_action( 'init', 'sandbox_widgets_init' );
