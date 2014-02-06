@@ -665,6 +665,11 @@ body.attachment div.entry-caption,body.attachment .entry-content p {
 	color: #979584;
 }
 
+.comment.bypostauthor{
+	background: #e3e2c9;
+	padding: 1em 0;
+}
+
 .comment-text {
 	line-height: 1.5;
 }
