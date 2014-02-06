@@ -560,7 +560,7 @@ function get_previous_comments_link( $label = '' ) {
 	$prevpage = intval($page) - 1;
 
 	if ( empty($label) )
-		$label = __('&laquo; Older Comments');
+		$label = __('&laquo; Older Comments', 'satorii');
 
 	return '<a href="' . esc_url( get_comments_pagenum_link( $prevpage ) ) . '" ' . apply_filters( 'previous_comments_link_attributes', '' ) . '>' . preg_replace('/&([^#])(?![a-z]{1,8};)/', '&#038;$1', $label) .'</a>';
 } //REFERENCE: function get_previous_comments_link( $label = '' )
@@ -586,7 +586,7 @@ function get_next_comments_link( $label = '', $max_page = 0 ) {
 		return;
 
 	if ( empty($label) )
-		$label = __('Newer Comments &raquo;');
+		$label = __('Newer Comments &raquo;', 'satorii');
 
 	return '<a href="' . esc_url( get_comments_pagenum_link( $nextpage, $max_page ) ) . '" ' . apply_filters( 'next_comments_link_attributes', '' ) . '>'. preg_replace('/&([^#])(?![a-z]{1,8};)/', '&#038;$1', $label) .'</a>';
 } //REFERENCE: function get_next_comments_link( $label = '', $max_page = 0 )
