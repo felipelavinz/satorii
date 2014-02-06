@@ -663,7 +663,7 @@ class satorii{
 		// enqueue styles
 		wp_enqueue_style( 'yui-reset-fonts-grids', $this->template_uri .'/css/reset-fonts-grids.css', array(), '2.5.1', 'all' );
 		wp_enqueue_style( 'yui-base', $this->template_uri .'/css/base-min.css', array('yui-reset-fonts-grids'), '2.5.1', 'all' );
-		wp_enqueue_style( 'satorii', get_stylesheet_uri(), array('yui-reset-fonts-grids', 'yui-base'), self::theme_ver, 'all' );
+		wp_enqueue_style( 'satorii', get_stylesheet_uri(), array('yui-reset-fonts-grids', 'yui-base', 'dashicons'), self::theme_ver, 'all' );
 		wp_enqueue_style( 'fancybox-css', $this->template_uri .'/css/jquery.fancybox-1.3.4.css', array(), '1.3.4', 'screen' );
 
 		// ... aaand scripts
