@@ -595,8 +595,9 @@ endif; // REFERENCE: if (!function_exists('get_previous_comments_link'))
 
 function satorii_page_nav($echo=true){
 	global $post;
-	$ancestors_q = count($post->ancestors);
-	$urvater = ( $ancestors_q === 0 ) ? $post->ID : end($post->ancestors);
+	$ancestors = $post->ancestors;
+	$ancestors_q = count($ancestors);
+	$urvater = ( $ancestors_q === 0 ) ? $post->ID : end($ancestors);
 	// If this is a top-level page, we'll show it's children; otherwhise we'll show
 	// current top-level forefather's children
 	$menu = substr(wp_list_pages('sort_column=menu_order&child_of=' . $post->ID .'&echo=0&title_li=<h3 class="page-links-title">' . get_the_title($post->ID) . '</h3>'), 20, -5);
