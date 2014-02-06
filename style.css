@@ -55,6 +55,10 @@ ul li {
 	list-style-type: square;
 }
 
+.dashicons{
+	color: #868F83;
+}
+
 .fw {
 	width: 100% !important;
 	float: none;
@@ -172,14 +176,10 @@ h3.entry-title span {
 	font-size: 66.7%;
 }
 
-h3.entry-title span.comments-link a {
-	background: url(img/mini_icons2/comment.gif) left no-repeat;
-	padding-left: 13px;
-}
-
-h3.entry-title span.edit-link a {
-	background: url(img/mini_icons2/field_input.gif) left no-repeat;
-	padding-left: 13px;
+h3.entry-title .dashicons{
+	font-size: 116%;
+	position: relative;
+	top: .5em;
 }
 
 h2.page-title {
@@ -291,19 +291,22 @@ h3.page-links-title {
 	color: #C90;
 }
 
-.tag-links,.archive .cat-links,.search .cat-links {
+.tag-links, .archive .cat-links, .search .cat-links{
 	font-size: 85%;
-	background: url(img/mini_icons2/tag.gif) left no-repeat;
-	padding-left: 13px;
+}
+
+.archive .cat-links, .search .cat-links{
+	margin-bottom: .5em;
 }
 
 .tag-links {
 	clear: both;
 }
 
-.archive .cat-links,.search .cat-links {
-	background-image: url(img/mini_icons2/folder.gif);
-	margin-bottom: 0.5em;
+.cat-links i, .tag-links i{
+	font-size: 108%;
+	position: relative;
+	top: .25em;
 }
 
 .tag-links span,.archive .cat-links span,.search .cat-links span {
