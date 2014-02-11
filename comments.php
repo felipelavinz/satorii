@@ -69,7 +69,7 @@ foreach ( $comments as $comment )
 
 <?php if ( get_option('comment_registration') && !$user_ID ) : ?>
 					<p id="login-req"><?php printf(__('You must be <a href="%s" title="Log in">logged in</a> to post a comment.', 'satorii'),
-					get_bloginfo('wpurl') . '/wp-login.php?redirect_to=' . get_permalink() ) ?></p>
+					site_url() . '/wp-login.php?redirect_to=' . get_permalink() ) ?></p>
 
 <?php else : ?>
 					<div class="formcontainer">
