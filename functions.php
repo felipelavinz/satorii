@@ -655,6 +655,7 @@ class satorii{
 	public function setup_hooks(){
 		add_action( 'after_setup_theme', array($this, 'setup_theme') );
 		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_assets') );
+		add_action( 'comment_form_after', array($this, 'balance_comment_form') );
 	}
 	public function setup_theme(){
 		// Translate, if applicable
@@ -671,6 +672,11 @@ class satorii{
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'fancybox', $this->template_uri .'/js/jquery.fancybox-1.3.4.pack.js', array('jquery'), '1.3.4', true );
 		wp_enqueue_script( 'satorii-js', $this->template_uri .'/js/satorii.js', array('jquery', 'fancybox'), self::theme_ver, true );
+	}
+	public function balance_comment_form(){
+		if ( ! is_logged_in() ) {
+			echo '</div>';
+		}
 	}
 }
 // Instantiate the class object

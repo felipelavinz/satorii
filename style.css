@@ -628,7 +628,7 @@ body.attachment div.entry-caption,body.attachment .entry-content p {
 
 .comment {
 	clear: both;
-	margin: 1.5em 0;
+	padding: 1.5em 0 0;
 }
 
 .comment:first-child {
@@ -685,13 +685,13 @@ body.attachment div.entry-caption,body.attachment .entry-content p {
 	line-height: 1.5;
 }
 
-#respond {
+#respondcontainer{
 	width: 59.75%;
 	margin: 3em 0 0 35.5%;
 }
 
-.no-replies {
-	margin: 3em auto !important;
+#respondcontainer.no-replies {
+	margin: 3em auto;
 }
 
 p#comment-notes {
@@ -711,14 +711,21 @@ p#comment-notes {
 	border-radius: 0.25em;
 	color: #636257;
 }
-#commentform .form-allowed-tags{
+#respond .form-allowed-tags{
 	clear: both;
 	color: #979584;
 	font-size: 85%;
-	margin-left: 29%;
 	line-height: 1.5;
+	width: 71%;
+	margin: 1em 0 1em auto;
 }
-#commentform code{
+
+.logged-in #respond .form-allowed-tags{
+	width: 72%;
+	margin: 1em;
+}
+
+#respond code{
 	color: #636257;
 }
 
@@ -758,6 +765,22 @@ textarea#comment {
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 	border-radius: 0.25em;
+}
+
+#submit:hover{
+	border-top-color: #4A4941;
+	border-left-color: #4A4941;
+	background-color: #636257;
+	cursor: pointer;
+}
+
+.logged-in #commentform .form-submit{
+	margin: 1em 27% 1em 1em;
+}
+
+.logged-in #comments-list .form-allowed-tags,
+.logged-in #comments-list .form-submit{
+	margin-left: 54px !important;
 }
 
 .comment form#commentform {
