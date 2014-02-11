@@ -413,10 +413,6 @@ pre {
 	background: #ebeade;
 }
 
-#nav-below div, #nav-comments div {
-	padding: 1% 0;
-}
-
 .nav-previous {
 	text-align: left;
 }
@@ -434,6 +430,8 @@ pre {
 }
 
 #nav-below a, #nav-comments div > a {
+	display: block;
+	padding: 1.5em 0;
 	color: #7A7A71;
 	text-transform: uppercase;
 	text-decoration: none;
@@ -443,6 +441,7 @@ pre {
 
 #nav-below a:hover, #nav-comments div > a:hover {
 	color: #000;
+	background: #ebeade;
 }
 
 #nav-images {
@@ -885,7 +884,7 @@ textarea#comment {
 	color: #7D7C6E;
 }
 
-.gallery {
+.gallery, .gallery + *{
 	clear: both;
 }
 

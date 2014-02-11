@@ -298,10 +298,10 @@ function sandbox_tag_ur_it($glue) {
 // Produces an avatar image with the hCard-compliant photo class
 function sandbox_commenter_link() {
 	$commenter = get_comment_author_link();
-	if ( ereg( '<a[^>]* class=[^>]+>', $commenter ) ) {
-		$commenter = ereg_replace( '(<a[^>]* class=[\'"]?)', '\\1url ' , $commenter );
+	if ( preg_match( '<a[^>]* class=[^>]+>', $commenter ) ) {
+		$commenter = preg_replace( '(<a[^>]* class=[\'"]?)', '\\1url ' , $commenter );
 	} else {
-		$commenter = ereg_replace( '(<a )/', '\\1class="url "' , $commenter );
+		$commenter = preg_replace( '(<a )/', '\\1class="url "' , $commenter );
 	}
 	$avatar_email = get_comment_author_email();
 	$avatar_size = apply_filters( 'avatar_size', '32' ); // Available filter: avatar_size
@@ -600,7 +600,7 @@ function satorii_page_nav($echo=true){
 	$urvater = ( $ancestors_q === 0 ) ? $post->ID : end($ancestors);
 	// If this is a top-level page, we'll show it's children; otherwhise we'll show
 	// current top-level forefather's children
-	$menu = substr(wp_list_pages('sort_column=menu_order&child_of=' . $post->ID .'&echo=0&title_li=<h3 class="page-links-title">' . get_the_title($post->ID) . '</h3>'), 20, -5);
+	$menu = substr(wp_list_pages('sort_column=menu_order&child_of=' . $urvater .'&echo=0&title_li=<h3 class="page-links-title">' . get_the_title($urvater) . '</h3>'), 20, -5);
 	$out = !empty($menu) ? '<div class="page-meta">'. $menu .'</div>' : null;
 	if ( $echo ) echo $out;
 	else return $out;
@@ -674,7 +674,7 @@ class satorii{
 		wp_enqueue_script( 'satorii-js', $this->template_uri .'/js/satorii.js', array('jquery', 'fancybox'), self::theme_ver, true );
 	}
 	public function balance_comment_form(){
-		if ( ! is_logged_in() ) {
+		if ( ! is_user_logged_in() ) {
 			echo '</div>';
 		}
 	}
