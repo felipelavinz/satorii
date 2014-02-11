@@ -609,6 +609,9 @@ body.attachment div.entry-caption,body.attachment .entry-content p {
 #comments-list h3 {
 	margin-left: 28%;
 }
+#comments-list #reply-title{
+	margin-left: 0;
+}
 
 #comments-list .yui-u {
 	width: 72%;
@@ -670,6 +673,14 @@ body.attachment div.entry-caption,body.attachment .entry-content p {
 	padding: 1em 0;
 }
 
+#comments-list .unapproved{
+	display: inline-block;
+	padding: 1em;
+	font-style: italic;
+	margin: 2em 1.95em -1.2em;
+	border-left: 2px solid #e3e2c9;
+}
+
 .comment-text {
 	line-height: 1.5;
 }
@@ -700,6 +711,16 @@ p#comment-notes {
 	border-radius: 0.25em;
 	color: #636257;
 }
+#commentform .form-allowed-tags{
+	clear: both;
+	color: #979584;
+	font-size: 85%;
+	margin-left: 29%;
+	line-height: 1.5;
+}
+#commentform code{
+	color: #636257;
+}
 
 textarea#comment {
 	line-height: 1.7
@@ -716,6 +737,10 @@ textarea#comment {
 
 #form-textarea div {
 	margin-left: 2.5%;
+}
+
+#commentform .form-submit{
+	margin-left: 29%;
 }
 
 #submit {
