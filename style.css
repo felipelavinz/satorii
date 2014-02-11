@@ -75,6 +75,7 @@ ul li {
 
 h2.entry-title,#blog-title a,h2.page-title,h3.entry-title {
 	font-family: 'ITC Avant Garde Gothic Std','URW Gothic L','Century Gothic', 'Avant Garde', 'Trebuchet MS', sans-serif;
+	word-wrap: break-word;
 }
 
 #blog-title {
