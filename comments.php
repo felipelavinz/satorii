@@ -86,7 +86,7 @@ foreach ( $comments as $comment )
 							</div>'
 							),
 							'comment_field' => '<div class="yui-u" id="form-textarea"><div class="form-label"><label for="comment">'. __( 'Comment', 'satorii' ) .'</label></div>
-								<div class="form-textarea"><textarea id="comment" name="comment" class="text required" cols="45" rows="8" tabindex="6"></textarea></div></div></div>',
+								<div class="form-textarea"><textarea id="comment" name="comment" class="text required" cols="45" rows="8" tabindex="6"></textarea></div></div>',
 							'id_form' => 'commentform',
 							'id_submit' => 'submit'
 						)); ?>
