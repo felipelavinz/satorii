@@ -1,7 +1,7 @@
 <div class="yui-gb" id="sidebar-wrapper">
 	<div id="primary" class="sidebar yui-u first">
 		<ul class="xoxo">
-<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar(1) ) : // begin primary sidebar widgets ?>
+<?php if ( !dynamic_sidebar(1) ) : // begin primary sidebar widgets ?>
 			<li id="pages">
 				<h3><?php _e( 'Pages', 'satorii' ) ?></h3>
 				<ul>
@@ -19,7 +19,7 @@
 	</div><!-- #primary .sidebar -->
 	<div id="secondary" class="sidebar yui-u">
 		<ul class="xoxo">
-<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar(2) ) : // begin secondary sidebar widgets ?>
+<?php if ( !dynamic_sidebar(2) ) : // begin secondary sidebar widgets ?>
 			<li id="search">
 				<h3><label for="s"><?php _e( 'Search', 'satorii' ) ?></label></h3>
 				<form id="searchform" class="blog-search" method="get" action="<?php echo home_url() ?>">
@@ -52,7 +52,7 @@
 
 	<div id="terciary" class="sidebar yui-u">
 		<ul class="xoxo">
-	<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar(3) ) : // begin primary sidebar widgets ?>
+	<?php if ( !dynamic_sidebar(3) ) : // begin primary sidebar widgets ?>
 			<li id="calendar">
 				<?php get_calendar(); ?>
 			</li>

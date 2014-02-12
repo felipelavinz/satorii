@@ -16,19 +16,15 @@ You should have received a copy of the GNU General Public License along with SAN
 */
 
 function satorii_globalnav(){
-	if ( function_exists('wp_nav_menu') ) {
-		wp_nav_menu( array(
-			'menu' => 'globalnav',
-			'container' => 'div',
-			'container_id' => 'menu',
-			'echo' => true,
-			'depth' => 1,
-			'theme_location' => 'globalnav',
-			'fallback_cb' => 'satorii_globalnav_fallback'
-		));
-	} else {
-		satorii_globalnav_fallback();
-	}
+	wp_nav_menu( array(
+		'menu' => 'globalnav',
+		'container' => 'div',
+		'container_id' => 'menu',
+		'echo' => true,
+		'depth' => 1,
+		'theme_location' => 'globalnav',
+		'fallback_cb' => 'satorii_globalnav_fallback'
+	));
 }
 
 // Produces a list of pages in the header without whitespace
@@ -466,8 +462,6 @@ function widget_sandbox_rsslinks_control() {
 
 // Widgets plugin: intializes the plugin after the widgets above have passed snuff
 function sandbox_widgets_init() {
-	if ( !function_exists('register_sidebars') )
-		return;
 
 	// Formats the Sandbox widgets, adding readability-improving whitespace
 	$p = array(
@@ -536,58 +530,6 @@ function satorii_list_pings($comment, $args, $depth) { // Uses the new functions
 							<div class="trackback-text"><?php comment_text() ?></div>
 <?php } // REFERENCE: function satorii_list_pings()
 
-/**
- * Under these lines we're going to see if function
- * get_previous_comments_link() exists (it exists since
- * v2.7.1). If it doesn't, let's create it. The same
- * for get_next_comments_link()
- */
-if (!function_exists('get_previous_comments_link')):
-function get_previous_comments_link( $label = '' ) {
-	if ( !is_singular() )
-		return;
-
-	$page = get_query_var('cpage');
-
-	if ( intval($page) <= 1 )
-		return;
-
-	$prevpage = intval($page) - 1;
-
-	if ( empty($label) )
-		$label = __('&laquo; Older Comments', 'satorii');
-
-	return '<a href="' . esc_url( get_comments_pagenum_link( $prevpage ) ) . '" ' . apply_filters( 'previous_comments_link_attributes', '' ) . '>' . preg_replace('/&([^#])(?![a-z]{1,8};)/', '&#038;$1', $label) .'</a>';
-} //REFERENCE: function get_previous_comments_link( $label = '' )
-
-// Since get_next_comments_link() was created at the same time as the previous one...
-function get_next_comments_link( $label = '', $max_page = 0 ) {
-	global $wp_query;
-
-	if ( !is_singular() )
-		return;
-
-	$page = get_query_var('cpage');
-
-	$nextpage = intval($page) + 1;
-
-	if ( empty($max_page) )
-		$max_page = $wp_query->max_num_comment_pages;
-
-	if ( empty($max_page) )
-		$max_page = get_comment_pages_count();
-
-	if ( $nextpage > $max_page )
-		return;
-
-	if ( empty($label) )
-		$label = __('Newer Comments &raquo;', 'satorii');
-
-	return '<a href="' . esc_url( get_comments_pagenum_link( $nextpage, $max_page ) ) . '" ' . apply_filters( 'next_comments_link_attributes', '' ) . '>'. preg_replace('/&([^#])(?![a-z]{1,8};)/', '&#038;$1', $label) .'</a>';
-} //REFERENCE: function get_next_comments_link( $label = '', $max_page = 0 )
-
-endif; // REFERENCE: if (!function_exists('get_previous_comments_link'))
-
 function satorii_page_nav($echo=true){
 	global $post;
 	$ancestors = $post->ancestors;
@@ -599,13 +541,6 @@ function satorii_page_nav($echo=true){
 	$out = !empty($menu) ? '<div class="page-meta">'. $menu .'</div>' : null;
 	if ( $echo ) echo $out;
 	else return $out;
-}
-
-if ( function_exists( 'register_nav_menus') ) {
-	// Nav menus support for WP 3.0+
-	register_nav_menus( array(
-		'globalnav' => __('Main menu', 'satorii')
-	));
 }
 
 
@@ -655,6 +590,11 @@ class satorii{
 	public function setup_theme(){
 		// Translate, if applicable
 		load_theme_textdomain( 'satorii', dirname( __FILE__ ) .'/translation' );
+
+		// register nav menu locations
+		register_nav_menus( array(
+			'globalnav' => __('Main menu', 'satorii')
+		));
 	}
 	public function enqueue_assets(){
 		// enqueue styles
