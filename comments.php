@@ -1,6 +1,5 @@
 <?php
 	global $sandbox_comment_alt;
-	echo '<pre>', print_r($wp_query, true) ,'</pre>';
 	if ( 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']) )
 		die ( 'Please do not load this page directly. Thanks.' );
 	$ping_count = $comment_count = 0;
