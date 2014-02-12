@@ -24,7 +24,6 @@ foreach ( $comments as $comment )
 				<div class="yui-gd">
 
 				<div id="trackbacks-list" class="comments yui-u first">
-
 					<h3><?php printf($ping_count > 0 ? __('<span>%d</span> Trackbacks', 'satorii') : __('<span>No</span> Trackbacks', 'satorii'), $ping_count) ?></h3>
 						<?php if ( pings_open() ) { ?>
 							<p class="leave-trackback"><?php _e('You can leave a trackback using this <acronym title="Universal Resource Locator">URL</acronym>:', 'satorii'); ?> <span class="trackback-url"><?php trackback_url();?></span></p>
@@ -60,7 +59,7 @@ foreach ( $comments as $comment )
 <?php endif; // REFERENCE: if ( $comments ) ?>
 
 <?php endif // REFERENCE: if ( !get_previous_comments_link() || !get_next_comments_link() ) ?>
-<?php if ( 'open' == $post->comment_status ) : ?>
+<?php if ( comments_open() ) : ?>
 <?php $req = get_option('require_name_email'); // Checks if fields are required. Thanks, Adam. ;-) ?>
 
 				<div id="respondcontainer"<?php if ( $comment_count == 0 ) : echo ' class="no-replies"'; endif; ?>>
@@ -93,6 +92,8 @@ foreach ( $comments as $comment )
 
 				</div><!-- #respond -->
 
+<?php elseif ( ! comments_open() && get_post_type() === 'post' ) : ?>
+	<div class="closedcomments"><?php _e( 'Comments are closed.' , 'satorii' ); ?></div>
 <?php endif // REFERENCE: if ( 'open' == $post->comment_status ) ?>
 
 			</div><!-- #comments -->
