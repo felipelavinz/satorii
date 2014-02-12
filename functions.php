@@ -298,11 +298,6 @@ function sandbox_tag_ur_it($glue) {
 // Produces an avatar image with the hCard-compliant photo class
 function sandbox_commenter_link() {
 	$commenter = get_comment_author_link();
-	if ( preg_match( '<a[^>]* class=[^>]+>', $commenter ) ) {
-		$commenter = preg_replace( '(<a[^>]* class=[\'"]?)', '\\1url ' , $commenter );
-	} else {
-		$commenter = preg_replace( '(<a )/', '\\1class="url "' , $commenter );
-	}
 	$avatar_email = get_comment_author_email();
 	$avatar_size = apply_filters( 'avatar_size', '32' ); // Available filter: avatar_size
 	$avatar = str_replace( "class='avatar", "class='photo avatar", get_avatar( $avatar_email, $avatar_size ) );
@@ -516,8 +511,8 @@ function satorii_list_comments($comment, $args, $depth) { // Enables threaded co
 	$GLOBALS['comment'] = $comment; ?>
 						<li id="comment-<?php comment_ID() ?>" <?php comment_class('yui-gf fw') ?>>
 							<div class="comment-author vcard yui-u first"><?php sandbox_commenter_link() ?></div>
-<?php if ($comment->comment_approved == '0') _e("\t\t\t\t\t<span class='unapproved'>Your comment is awaiting moderation.</span>\n", 'satorii') ?>
 							<div class="yui-u">
+								<?php if ($comment->comment_approved == '0') _e("\t\t\t\t\t<span class='unapproved'>Your comment is awaiting moderation.</span>\n", 'satorii') ?>
 							<div class="comment-text"><?php comment_text() ?></div>
 							<div class="comment-meta"><?php printf(__('Posted %1$s at %2$s <span class="meta-sep">|</span> <a href="%3$s" title="Permalink to this comment">Permalink</a>', 'satorii'),
 										get_comment_date(),
