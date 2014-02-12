@@ -5,14 +5,12 @@
 ?>
 			<div id="comments">
 <?php
-	if ( !empty($post->post_password) ) :
-		if ( isset($_COOKIE['wp-postpass_' . COOKIEHASH]) && $_COOKIE['wp-postpass_' . COOKIEHASH] != $post->post_password ) :
+	if ( post_password_required() ) :
 ?>
 				<div class="nopassword"><?php _e( 'This post is protected. Enter the password to view any comments.', 'satorii' ) ?></div>
 			</div><!-- .comments -->
 <?php
 		return;
-	endif;
 endif;
 ?>
 <?php if ( $comments ) : ?>
