@@ -1,4 +1,6 @@
 <?php
+	global $sandbox_comment_alt;
+	echo '<pre>', print_r($wp_query, true) ,'</pre>';
 	if ( 'comments.php' == basename($_SERVER['SCRIPT_FILENAME']) )
 		die ( 'Please do not load this page directly. Thanks.' );
 	$ping_count = $comment_count = 0;
@@ -13,12 +15,12 @@
 		return;
 endif;
 ?>
-<?php if ( $comments ) : ?>
-<?php global $sandbox_comment_alt ?>
-
+<?php if ( have_comments() ) : ?>
 <?php // Number of pings and comments
-foreach ( $comments as $comment )
+while ( have_comments() ) {
+	the_comment();
 	get_comment_type() == "comment" ? ++$comment_count : ++$ping_count;
+}
 ?>
 
 				<div class="yui-gd">
@@ -31,7 +33,7 @@ foreach ( $comments as $comment )
 				<?php if ( $ping_count ) : ?>
 				<?php $sandbox_comment_alt = 0 ?>
 					<ol>
-<?php wp_list_comments('type=pings&callback=satorii_list_pings'); //list comments?>
+<?php wp_list_comments('type=pings&callback=satorii_list_pings&per_page=-1'); //list comments?>
 					</ol>
 <?php endif // REFERENCE: if ( $ping_count ) ?>
 				</div><!-- #trackbacks-list .comments -->
