@@ -685,7 +685,7 @@ body.attachment div.entry-caption,body.attachment .entry-content p {
 	line-height: 1.5;
 }
 
-#respondcontainer{
+#respondcontainer, #comments .nopassword{
 	width: 59.75%;
 	margin: 3em 0 0 35.5%;
 }

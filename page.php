@@ -11,6 +11,7 @@
 				</div>
 				<?php satorii_page_nav(); ?>
 			</div><!-- .post -->
+			<?php comments_template() ?>
 		</div><!-- #content -->
 	</div><!-- #container -->
 <?php get_footer() ?>
