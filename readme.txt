@@ -1,6 +1,6 @@
 === Satorii ===
 Theme Name: Satorii
-Theme URI: http://yukei.net/
+Theme URI: http://www.yukei.net/
 Author: Felipe Lavin Z.
 Author URI: http://felipe.lv
 Description: Satorii is a clean, minimalist theme for WordPress with a strong focus on your contents and readability. It features a single column layout and three widgetized areas on the site footer. It was born as a fork of Scott Wallick's Sandbox theme.

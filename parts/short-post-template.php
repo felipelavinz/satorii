@@ -1,5 +1,5 @@
 			<div id="post-<?php the_ID() ?>" <?php post_class();?>>
-				<h3 class="entry-title"><a href="<?php the_permalink() ?>" title="<?php printf( __( 'Permalink to %s', 'satorii' ), the_title_attribute('echo=0') ) ?>" rel="bookmark"><?php the_title() ?></a> <span class="comments-link"><i class="dashicons dashicons-admin-comments"></i><?php comments_popup_link( '0','1','%' ) ?></span> <?php edit_post_link( __('Edit', 'satorii'), ' · <span class="edit-link"><i class="dashicons dashicons-edit"></i>', '</span>');?></h3>
+				<h3 class="entry-title"><a href="<?php the_permalink() ?>" title="<?php printf( __( 'Permalink to %s', 'satorii' ), the_title_attribute('echo=0') ) ?>" rel="bookmark"><?php the_title() ?></a> <span class="comments-link"><i class="dashicons dashicons-admin-comments"></i><?php comments_popup_link( '0','1','%' ) ?></span> <?php edit_post_link( __('Edit', 'satorii'), ' &middot; <span class="edit-link"><i class="dashicons dashicons-edit"></i>', '</span>');?></h3>
 				<div class="entry-content">
 <?php the_excerpt( __( 'Read More <span class="meta-nav">&raquo;</span>', 'satorii' ) ) ?>
 				<?php if ( $post->post_type == 'post' ) { ?><p class="cat-links"><i class="dashicons dashicons-category"></i><span><?php _e('Categories:', 'satorii')?></span> <?php the_category(',') ?></p><?php } ?>

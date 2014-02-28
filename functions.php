@@ -565,6 +565,7 @@ class satorii{
 	private static $instance;
 	private $template_uri;
 	const theme_ver = 1.5;
+	const theme_uri = 'http://www.yukei.net';
 	private function __construct(){
 		$this->setup_hooks();
 		$this->template_uri = get_stylesheet_directory_uri();
@@ -586,6 +587,10 @@ class satorii{
 		add_action( 'after_setup_theme', array($this, 'setup_theme') );
 		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_assets') );
 		add_action( 'comment_form_after', array($this, 'balance_comment_form') );
+		add_action( 'wp_footer', array($this, 'add_footer_credits') );
+	}
+	public function add_footer_credits(){
+		echo '<p><strong>', bloginfo('name') ,'</strong> <a href="', bloginfo('rss2_url') ,'">(RSS)</a> + <strong>Satorii</strong> theme by <a href="'. self::theme_uri .'">Felipe Lav&iacute;n</a></p>';
 	}
 	public function setup_theme(){
 		// Translate, if applicable
