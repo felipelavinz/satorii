@@ -1,0 +1,33 @@
+{
+  "name": "satorii",
+  "version": "2.0.0",
+  "homepage": "https://github.com/felipelavinz/satorii",
+  "authors": [
+    "Felipe Lavín Z. <felipe@yukei.net>"
+  ],
+  "description": "Satorii is a clean, minimalistic and responsive theme for WordPress with a strong focus on your contents and readability. It features a single column layout, multiple sidebars, and supports localization and post formats.",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "white",
+    "light",
+    "one-column",
+    "custom-menu",
+    "threaded-comments",
+    "translation-ready",
+    "sticky-post"
+  ],
+  "license": "GPL-2.0+",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4"
+  }
+}
