@@ -1,0 +1,42 @@
+.entry{
+
+}
+.entry-content{
+	font-size: 15px;
+	line-height: 24px;
+}
+.entry-meta{
+	font-size: 13px;
+	line-height: 18px;
+	dt{
+		font-weight: bold;
+		color: @gray-lightish;
+	}
+	dd{
+		margin-bottom: 1em;
+	}
+	a{
+		color: @gray-light;
+		text-decoration: none;
+		&:hover{
+			text-decoration: underline;
+		}
+	}
+	ul{
+		padding: 1em;
+		& > li {
+			list-style: none;
+			position: relative;
+			&:before{
+				content: '';
+				display: block;
+				width: 4px;
+				height: 4px;
+				background-color: #c30;
+				position: absolute;
+				left: -.75em;
+				top: 35%;
+			}
+		}
+	}
+}

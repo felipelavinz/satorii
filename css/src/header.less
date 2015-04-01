@@ -1,0 +1,28 @@
+#blog-description{
+	font-size: 11px;
+	color: @gray-tinted;
+	letter-spacing: 1.5px;
+	line-height: 12px;
+	text-transform: uppercase;
+}
+.globalnav{
+	margin: 2em 0;
+	text-align: center;
+	li{
+		display: inline-block;
+		border-left: 1px solid #BBC1BC;
+		a{
+			font-size: 18px;
+			display: inline-block;
+			padding: .25em 1.5em;
+			color: @gray-tinted;
+			&:hover{
+				text-decoration: none;
+				color: @gray;
+			}
+		}
+		&:first-child{
+			border-left: none;
+		}
+	}
+}
