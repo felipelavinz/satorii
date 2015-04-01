@@ -4,6 +4,28 @@
 .entry-content{
 	font-size: 15px;
 	line-height: 24px;
+	.alignleft{
+		float: left;
+		margin: 0 1em 0 0;
+	}
+	.alignright{
+		float: right;
+		margin: 0 0 0 1em;
+	}
+	.aligncenter{
+		display: block;
+		margin: 1em auto;
+	}
+	img, figure{
+		max-width: 100%;
+		height: auto;
+	}
+	h1, h2, h3, h4, h5, h6{
+		font-family: @font-family-sans-serif;
+	}
+	table{
+		.table();
+	}
 }
 .entry-meta{
 	font-size: 13px;
