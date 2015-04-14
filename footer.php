@@ -1,7 +1,7 @@
 	</div><!-- #inner-wrap -->
 </div><!-- #wrapper .hfeed -->
-<div id="footer">
+<footer id="page-footer">
 	<?php wp_footer() ?>
-</div><!-- #footer -->
+</footer>
 </body>
 </html>
