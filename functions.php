@@ -18,195 +18,23 @@ You should have received a copy of the GNU General Public License along with SAN
 function satorii_globalnav(){
 	wp_nav_menu( array(
 		'menu' => 'globalnav',
-		'container' => 'div',
-		'container_id' => 'menu',
+		'container' => 'nav',
+		'container_id' => 'globalnav',
+		'container_class' => 'globalnav',
+		'menu_class' => 'globalnav-menu',
 		'echo' => true,
 		'depth' => 1,
 		'theme_location' => 'globalnav',
-		'fallback_cb' => 'satorii_globalnav_fallback'
+		'fallback_cb' => null
 	));
 }
 
 // Produces a list of pages in the header without whitespace
 function satorii_globalnav_fallback() {
 	if ( $menu = str_replace( array( "\r", "\n", "\t" ), '', wp_list_pages('title_li=&sort_column=menu_order&echo=0&depth=1') ) )
-		$menu = '<ul>' . $menu . '</ul>';
+		$menu = '<ul class="nav nav-pills">' . $menu . '</ul>';
 	$menu = '<div id="menu">' . $menu . "</div>\n";
 	echo apply_filters( 'globalnav_menu', $menu ); // Filter to override default globalnav: globalnav_menu
-}
-
-// Generates semantic classes for BODY element
-function sandbox_body_class( $print = true ) {
-	global $wp_query, $current_user;
-
-	// It's surely a WordPress blog, right?
-	$c = array('wordpress');
-
-	// Applies the time- and date-based classes (below) to BODY element
-	sandbox_date_classes( time(), $c );
-
-	// Generic semantic classes for what type of content is displayed
-	is_front_page()  ? $c[] = 'home'       : null; // For the front page, if set
-	is_home()        ? $c[] = 'blog'       : null; // For the blog posts page, if set
-	is_archive()     ? $c[] = 'archive'    : null;
-	is_date()        ? $c[] = 'date'       : null;
-	is_search()      ? $c[] = 'search'     : null;
-	is_paged()       ? $c[] = 'paged'      : null;
-	is_attachment()  ? $c[] = 'attachment' : null;
-	is_404()         ? $c[] = 'four04'     : null; // CSS does not allow a digit as first character
-
-	// Special classes for BODY element when a single post
-	if ( is_single() ) {
-		$postID = $wp_query->post->ID;
-		the_post();
-
-		// Adds 'single' class and class with the post ID
-		$c[] = 'single postid-' . $postID;
-
-		// Adds classes for the month, day, and hour when the post was published
-		if ( isset( $wp_query->post->post_date ) )
-			sandbox_date_classes( mysql2date( 'U', $wp_query->post->post_date ), $c, 's-' );
-
-		// Adds category classes for each category on single posts
-		if ( $cats = get_the_category() )
-			foreach ( $cats as $cat )
-				$c[] = 's-category-' . $cat->slug;
-
-		// Adds tag classes for each tags on single posts
-		if ( $tags = get_the_tags() )
-			foreach ( $tags as $tag )
-				$c[] = 's-tag-' . $tag->slug;
-
-		// Adds MIME-specific classes for attachments
-		if ( is_attachment() ) {
-			$mime_type = get_post_mime_type();
-			$mime_prefix = array( 'application/', 'image/', 'text/', 'audio/', 'video/', 'music/' );
-				$c[] = 'attachmentid-' . $postID . ' attachment-' . str_replace( $mime_prefix, "", "$mime_type" );
-		}
-
-		// Adds author class for the post author
-		$c[] = 's-author-' . sanitize_title_with_dashes(strtolower(get_the_author_login()));
-		rewind_posts();
-	}
-
-	// Author name classes for BODY on author archives
-	elseif ( is_author() ) {
-		$author = $wp_query->get_queried_object();
-		$c[] = 'author';
-		$c[] = 'author-' . $author->user_nicename;
-	}
-
-	// Category name classes for BODY on category archvies
-	elseif ( is_category() ) {
-		$cat = $wp_query->get_queried_object();
-		$c[] = 'category';
-		$c[] = 'category-' . $cat->slug;
-	}
-
-	// Tag name classes for BODY on tag archives
-	elseif ( is_tag() ) {
-		$tags = $wp_query->get_queried_object();
-		$c[] = 'tag';
-		$c[] = 'tag-' . $tags->slug;
-	}
-
-	// Page author for BODY on 'pages'
-	elseif ( is_page() ) {
-		$pageID = $wp_query->post->ID;
-		$page_children = wp_list_pages("child_of=$pageID&echo=0");
-		the_post();
-		$c[] = 'page pageid-' . $pageID;
-		$c[] = 'page-author-' . sanitize_title_with_dashes(strtolower(get_the_author('login')));
-		// Checks to see if the page has children and/or is a child page; props to Adam
-		if ( $page_children )
-			$c[] = 'page-parent';
-		if ( $wp_query->post->post_parent )
-			$c[] = 'page-child parent-pageid-' . $wp_query->post->post_parent;
-		if ( is_page_template() ) // Hat tip to Ian, themeshaper.com
-			$c[] = 'page-template page-template-' . str_replace( '.php', '-php', get_post_meta( $pageID, '_wp_page_template', true ) );
-		rewind_posts();
-	}
-
-	// Search classes for results or no results
-	elseif ( is_search() ) {
-		the_post();
-		if ( have_posts() ) {
-			$c[] = 'search-results';
-		} else {
-			$c[] = 'search-no-results';
-		}
-		rewind_posts();
-	}
-
-	// For when a visitor is logged in while browsing
-	if ( $current_user->ID )
-		$c[] = 'loggedin';
-
-	// Paged classes; for 'page X' classes of index, single, etc.
-	if ( ( ( $page = $wp_query->get('paged') ) || ( $page = $wp_query->get('page') ) ) && $page > 1 ) {
-		$c[] = 'paged-' . $page;
-		if ( is_single() ) {
-			$c[] = 'single-paged-' . $page;
-		} elseif ( is_page() ) {
-			$c[] = 'page-paged-' . $page;
-		} elseif ( is_category() ) {
-			$c[] = 'category-paged-' . $page;
-		} elseif ( is_tag() ) {
-			$c[] = 'tag-paged-' . $page;
-		} elseif ( is_date() ) {
-			$c[] = 'date-paged-' . $page;
-		} elseif ( is_author() ) {
-			$c[] = 'author-paged-' . $page;
-		} elseif ( is_search() ) {
-			$c[] = 'search-paged-' . $page;
-		}
-	}
-
-	// Separates classes with a single space, collates classes for BODY
-	$c = join( ' ', apply_filters( 'body_class',  $c ) ); // Available filter: body_class
-
-	// And tada!
-	return $print ? print($c) : $c;
-}
-
-// Generates semantic classes for each post DIV element
-function sandbox_post_class( $print = true ) {
-	global $post, $sandbox_post_alt;
-
-	// hentry for hAtom compliace, gets 'alt' for every other post DIV, describes the post type and p[n]
-	$c = array( 'hentry', "p$sandbox_post_alt", $post->post_type, $post->post_status );
-
-	// Author for the post queried
-	$c[] = 'author-' . sanitize_title_with_dashes(strtolower(get_the_author('login')));
-
-	// Category for the post queried
-	foreach ( (array) get_the_category() as $cat )
-		$c[] = 'category-' . $cat->slug;
-
-	// Tags for the post queried; if not tagged, use .untagged
-	if ( get_the_tags() == null ) {
-		$c[] = 'untagged';
-	} else {
-		foreach ( (array) get_the_tags() as $tag )
-			$c[] = 'tag-' . $tag->slug;
-	}
-
-	// For password-protected posts
-	if ( $post->post_password )
-		$c[] = 'protected';
-
-	// Applies the time- and date-based classes (below) to post DIV
-	sandbox_date_classes( mysql2date( 'U', $post->post_date ), $c );
-
-	// If it's the other to the every, then add 'alt' class
-	if ( ++$sandbox_post_alt % 2 )
-		$c[] = 'alt';
-
-	// Separates classes with a single space, collates classes for post DIV
-	$c = join( ' ', apply_filters( 'post_class', $c ) ); // Available filter: post_class
-
-	// And tada!
-	return $print ? print($c) : $c;
 }
 
 // Define the num val for 'alt' classes (in post DIV and comment LI)
@@ -596,6 +424,33 @@ class satorii{
 		// Translate, if applicable
 		load_theme_textdomain( 'satorii', dirname( __FILE__ ) .'/translation' );
 
+		// Add default posts and comments RSS feed links to head.
+		add_theme_support( 'automatic-feed-links' );
+
+		/*
+		 * Let WordPress manage the document title.
+		 * By adding theme support, we declare that this theme does not use a
+		 * hard-coded <title> tag in the document head, and expect WordPress to
+		 * provide it for us.
+		 */
+		add_theme_support( 'title-tag' );
+
+		/*
+		 * Switch default core markup for search form, comment form, and comments
+		 * to output valid HTML5.
+		 */
+		add_theme_support( 'html5', array(
+			'search-form', 'comment-form', 'comment-list', 'gallery', 'caption',
+		) );
+
+		/*
+		 * Enable support for Post Formats.
+		 * See http://codex.wordpress.org/Post_Formats
+		 */
+		add_theme_support( 'post-formats', array(
+			'aside', 'image', 'video', 'quote', 'link', 'gallery',
+		) );
+
 		// register nav menu locations
 		register_nav_menus( array(
 			'globalnav' => __('Main menu', 'satorii')
@@ -603,15 +458,18 @@ class satorii{
 	}
 	public function enqueue_assets(){
 		// enqueue styles
-		wp_enqueue_style( 'yui-reset-fonts-grids', $this->template_uri .'/css/reset-fonts-grids.css', array(), '2.5.1', 'all' );
-		wp_enqueue_style( 'yui-base', $this->template_uri .'/css/base-min.css', array('yui-reset-fonts-grids'), '2.5.1', 'all' );
-		wp_enqueue_style( 'satorii', get_stylesheet_uri(), array('yui-reset-fonts-grids', 'yui-base', 'dashicons'), self::theme_ver, 'all' );
-		wp_enqueue_style( 'fancybox-css', $this->template_uri .'/css/jquery.fancybox-1.3.4.css', array(), '1.3.4', 'screen' );
+		// wp_enqueue_style( 'yui-reset-fonts-grids', $this->template_uri .'/css/reset-fonts-grids.css', array(), '2.5.1', 'all' );
+		// wp_enqueue_style( 'yui-base', $this->template_uri .'/css/base-min.css', array('yui-reset-fonts-grids'), '2.5.1', 'all' );
+		wp_enqueue_style( 'satorii-fonts', '//fonts.googleapis.com/css?family=Questrial|Roboto:400,400italic,700,700italic', array(), self::theme_ver, 'all' );
+		// wp_enqueue_style( 'satorii', get_stylesheet_uri(), array('yui-reset-fonts-grids', 'yui-base', 'dashicons', 'satorii-fonts'), self::theme_ver, 'all' );
+		wp_enqueue_style( 'satorii', $this->template_uri .'/css/style.css', array('dashicons', 'satorii-fonts'), self::theme_ver, 'all' );
+		// wp_enqueue_style( 'fancybox-css', $this->template_uri .'/css/jquery.fancybox-1.3.4.css', array(), '1.3.4', 'screen' );
 
 		// ... aaand scripts
 		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'fancybox', $this->template_uri .'/js/jquery.fancybox-1.3.4.pack.js', array('jquery'), '1.3.4', true );
-		wp_enqueue_script( 'satorii-js', $this->template_uri .'/js/satorii.js', array('jquery', 'fancybox'), self::theme_ver, true );
+		// wp_enqueue_script( 'fancybox', $this->template_uri .'/js/jquery.fancybox-1.3.4.pack.js', array('jquery'), '1.3.4', true );
+		wp_enqueue_script( 'satorii-js', $this->template_uri .'/js/satorii.js', array('jquery'), self::theme_ver, true );
+		wp_enqueue_script( 'livereload', '//localhost:35729/livereload.js', array() );
 	}
 	public function balance_comment_form(){
 		if ( ! is_user_logged_in() ) {
