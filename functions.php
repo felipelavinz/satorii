@@ -128,75 +128,6 @@ function sandbox_commenter_link() {
 	echo $avatar . ' <span class="fn n">' . $commenter . '</span>';
 }
 
-// Function to filter the default gallery shortcode
-function sandbox_gallery($attr) {
-	global $post;
-
-	if ( isset($attr['orderby']) ) {
-		$attr['orderby'] = sanitize_sql_orderby($attr['orderby']);
-		if ( !$attr['orderby'] )
-			unset($attr['orderby']);
-	}
-
-	extract(shortcode_atts( array(
-		'orderby'    => 'menu_order ASC, ID ASC',
-		'id'         => $post->ID,
-		'itemtag'    => 'dl',
-		'icontag'    => 'dt',
-		'captiontag' => 'dd',
-		'columns'    => 3,
-		'size'       => 'thumbnail',
-	), $attr ));
-
-	$i            =  0;
-	$id           =  intval($id);
-	$orderby      =  addslashes($orderby);
-	$attachments  =  get_children("post_parent=$id&post_type=attachment&post_mime_type=image&orderby={$orderby}");
-
-	if ( empty($attachments) )
-		return null;
-
-	if ( is_feed() ) {
-		$output = "\n";
-		foreach ( $attachments as $id => $attachment )
-			$output .= wp_get_attachment_link( $id, $size, true ) . "\n";
-		return $output;
-	}
-
-	$listtag     =  !empty($listtag) ? tag_escape($listtag) : null;
-	$itemtag     =  tag_escape($itemtag);
-	$captiontag  =  tag_escape($captiontag);
-	$columns     =  intval($columns);
-	$itemwidth   =  $columns > 0 ? floor(100/$columns) : 100;
-
-	$output = apply_filters( 'gallery_style', "\n" . '<div class="gallery">', 9 ); // Available filter: gallery_style
-
-	foreach ( $attachments as $id => $attachment ) {
-		$img_lnk = get_attachment_link($id);
-		$img_src = wp_get_attachment_image_src( $id, $size );
-		$img_src = $img_src[0];
-		$img_alt = $attachment->post_excerpt;
-		if ( $img_alt == null )
-			$img_alt = $attachment->post_title;
-		$img_rel = apply_filters( 'gallery_img_rel', 'attachment' ); // Available filter: gallery_img_rel
-		$img_class = apply_filters( 'gallery_img_class', 'gallery-image' ); // Available filter: gallery_img_class
-
-		$output  .=  "\n\t" . '<' . $itemtag . ' class="gallery-item gallery-columns-' . $columns .'">';
-		$output  .=  "\n\t\t" . '<' . $icontag . ' class="gallery-icon"><a href="' . $img_lnk . '" title="' . $img_alt . '" rel="' . $img_rel . '"><img src="' . $img_src . '" alt="' . $img_alt . '" class="' . $img_class . ' attachment-' . $size . '" /></a></' . $icontag . '>';
-
-		if ( $captiontag && trim($attachment->post_excerpt) ) {
-			$output .= "\n\t\t" . '<' . $captiontag . ' class="gallery-caption">' . $attachment->post_excerpt . '</' . $captiontag . '>';
-		}
-
-		$output .= "\n\t" . '</' . $itemtag . '>';
-		if ( $columns > 0 && ++$i % $columns == 0 )
-			$output .= "\n</div>\n" . '<div class="gallery">';
-	}
-	$output .= "\n</div>\n";
-
-	return $output;
-}
-
 // Widget: Search; to match the Sandbox style and replace Widget plugin default
 function widget_sandbox_search($args) {
 	extract($args);
@@ -376,9 +307,6 @@ function satorii_page_nav($echo=true){
 // Runs our code at the end to check that everything needed has loaded
 add_action( 'init', 'sandbox_widgets_init' );
 
-// Registers our function to filter default gallery shortcode
-add_filter( 'post_gallery', 'sandbox_gallery' );
-
 // Adds filters for the description/meta content in archives.php
 add_filter( 'archive_meta', 'wptexturize' );
 add_filter( 'archive_meta', 'convert_smilies' );
@@ -416,6 +344,7 @@ class satorii{
 		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_assets') );
 		add_action( 'comment_form_after', array($this, 'balance_comment_form') );
 		add_action( 'wp_footer', array($this, 'add_footer_credits') );
+		add_filter( 'post_gallery', array($this, 'filter_gallery'), 10, 2);
 	}
 	public function add_footer_credits(){
 		echo '<p><strong>', bloginfo('name') ,'</strong> <a href="', bloginfo('rss2_url') ,'">(RSS)</a> + <strong>Satorii</strong> theme by <a href="'. self::theme_uri .'">Felipe Lav&iacute;n</a></p>';
@@ -475,6 +404,87 @@ class satorii{
 		if ( ! is_user_logged_in() ) {
 			echo '</div>';
 		}
+	}
+	public function filter_gallery( $out = '', $attr = array() ){
+		static $instance = 0;
+		$instance++;
+		$post  = get_post();
+		$html5 = true;
+		$atts  = shortcode_atts( array(
+			'order'      => 'ASC',
+			'orderby'    => 'menu_order ID',
+			'id'         => $post ? $post->ID : 0,
+			'itemtag'    => $html5 ? 'figure'     : 'dl',
+			'icontag'    => $html5 ? 'div'        : 'dt',
+			'captiontag' => $html5 ? 'figcaption' : 'dd',
+			'columns'    => 3,
+			'size'       => 'thumbnail',
+			'include'    => '',
+			'exclude'    => '',
+			'link'       => ''
+		), $attr, 'gallery' );
+
+		$id = intval( $atts['id'] );
+
+		if ( ! empty( $atts['include'] ) ) {
+			$_attachments = get_posts( array( 'include' => $atts['include'], 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $atts['order'], 'orderby' => $atts['orderby'] ) );
+
+			$attachments = array();
+			foreach ( $_attachments as $key => $val ) {
+				$attachments[$val->ID] = $_attachments[$key];
+			}
+		} elseif ( ! empty( $atts['exclude'] ) ) {
+			$attachments = get_children( array( 'post_parent' => $id, 'exclude' => $atts['exclude'], 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $atts['order'], 'orderby' => $atts['orderby'] ) );
+		} else {
+			$attachments = get_children( array( 'post_parent' => $id, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $atts['order'], 'orderby' => $atts['orderby'] ) );
+		}
+
+		if ( empty( $attachments ) ) {
+			return '';
+		}
+
+		if ( is_feed() ) {
+			$output = "\n";
+			foreach ( $attachments as $att_id => $attachment ) {
+				$output .= wp_get_attachment_link( $att_id, $atts['size'], true ) . "\n";
+			}
+			return $output;
+		}
+
+		$columns    = intval( $atts['columns'] );
+		$col_class  = 24 / $columns;
+		$selector   = "gallery-{$instance}";
+		$size_class = sanitize_html_class( $atts['size'] );
+		$out        = "<div id='$selector' class='gallery galleryid-{$id} gallery-columns-{$columns} gallery-size-{$size_class}'>";
+		$i          = 0;
+		$attachs_q  = count( $attachments );
+
+		foreach ( $attachments as $id => $attachment ) {
+			if ( $i%$columns === 0 ) {
+				$out .= '<div class="row">';
+			}
+			$out .= '<div class="col-md-'. $col_class .'">';
+				$out .= '<figure class="thumbnail">';
+				if ( ! empty( $atts['link'] ) && 'file' === $atts['link'] ) {
+					$out .= wp_get_attachment_link( $id, $atts['size'], false, false, false, $attr );
+				} elseif ( ! empty( $atts['link'] ) && 'none' === $atts['link'] ) {
+					$out .= wp_get_attachment_image( $id, $atts['size'], false, $attr );
+				} else {
+					$out .= wp_get_attachment_link( $id, $atts['size'], true, false, false, $attr );
+				}
+				$out .= '</figure>';
+			$out .= '</div>';
+
+
+			if ( $i%$columns === $columns - 1 || $i + 1 === $attachs_q ) {
+				$out .= '</div><!--.row-->';
+			}
+
+			++$i;
+		}
+
+		$out .= "</div>";
+		return $out;
 	}
 }
 // Instantiate the class object
