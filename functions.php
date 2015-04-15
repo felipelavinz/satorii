@@ -3,7 +3,6 @@
 define( 'TEMPLATE_URL', get_template_directory_uri() );
 
 if ( !isset( $content_width ) ) $content_width = 480;
-add_theme_support('automatic-feed-links');
 
 /*
 This file is part of SANDBOX.
@@ -128,138 +127,6 @@ function sandbox_commenter_link() {
 	echo $avatar . ' <span class="fn n">' . $commenter . '</span>';
 }
 
-// Widget: Search; to match the Sandbox style and replace Widget plugin default
-function widget_sandbox_search($args) {
-	extract($args);
-	$options = get_option('widget_sandbox_search');
-	$title = empty($options['title']) ? __( 'Search', 'satorii' ) : esc_attr($options['title']);
-	$button = empty($options['button']) ? __( 'Find', 'satorii' ) : esc_attr($options['button']);
-?>
-			<?php echo $before_widget ?>
-				<?php echo $before_title ?><label for="s"><?php echo $title ?></label><?php echo $after_title ?>
-				<form id="searchform" class="blog-search" method="get" action="<?php echo home_url(); ?>">
-					<div>
-						<input id="s" name="s" type="text" class="text" value="<?php the_search_query() ?>" size="10" tabindex="1" />
-						<input type="submit" class="button" value="<?php echo $button ?>" tabindex="2" />
-					</div>
-				</form>
-			<?php echo $after_widget ?>
-<?php
-}
-
-// Widget: Search; element controls for customizing text within Widget plugin
-function widget_sandbox_search_control() {
-	$options = $newoptions = get_option('widget_sandbox_search');
-	if ( $_POST['search-submit'] ) {
-		$newoptions['title'] = strip_tags(stripslashes( $_POST['search-title']));
-		$newoptions['button'] = strip_tags(stripslashes( $_POST['search-button']));
-	}
-	if ( $options != $newoptions ) {
-		$options = $newoptions;
-		update_option( 'widget_sandbox_search', $options );
-	}
-	$title = esc_attr($options['title']);
-	$button = esc_attr($options['button']);
-?>
-	<p><label for="search-title"><?php _e( 'Title:', 'satorii' ) ?> <input class="widefat" id="search-title" name="search-title" type="text" value="<?php echo $title; ?>" /></label></p>
-	<p><label for="search-button"><?php _e( 'Button Text:', 'satorii' ) ?> <input class="widefat" id="search-button" name="search-button" type="text" value="<?php echo $button; ?>" /></label></p>
-	<input type="hidden" id="search-submit" name="search-submit" value="1" />
-<?php
-}
-
-// Widget: Meta; to match the Sandbox style and replace Widget plugin default
-function widget_sandbox_meta($args) {
-	extract($args);
-	$options = get_option('widget_meta');
-	$title = empty($options['title']) ? __( 'Meta', 'satorii' ) : esc_attr($options['title']);
-?>
-			<?php echo $before_widget; ?>
-				<?php echo $before_title . $title . $after_title; ?>
-				<ul>
-					<?php wp_register() ?>
-
-					<li><?php wp_loginout() ?></li>
-					<?php wp_meta() ?>
-
-				</ul>
-			<?php echo $after_widget; ?>
-<?php
-}
-
-// Widget: RSS links; to match the Sandbox style
-function widget_sandbox_rsslinks($args) {
-	extract($args);
-	$options = get_option('widget_sandbox_rsslinks');
-	$title = empty($options['title']) ? __( 'RSS Links', 'satorii' ) : esc_attr($options['title']);
-?>
-		<?php echo $before_widget; ?>
-			<?php echo $before_title . $title . $after_title; ?>
-			<ul>
-				<li><a href="<?php bloginfo('rss2_url') ?>" title="<?php echo esc_html( get_bloginfo('name'), 1 ) ?> <?php _e( 'Posts RSS feed', 'satorii' ); ?>" rel="alternate" type="application/rss+xml"><?php _e( 'All posts', 'satorii' ) ?></a></li>
-				<li><a href="<?php bloginfo('comments_rss2_url') ?>" title="<?php echo esc_html(bloginfo('name'), 1) ?> <?php _e( 'Comments RSS feed', 'satorii' ); ?>" rel="alternate" type="application/rss+xml"><?php _e( 'All comments', 'satorii' ) ?></a></li>
-			</ul>
-		<?php echo $after_widget; ?>
-<?php
-}
-
-// Widget: RSS links; element controls for customizing text within Widget plugin
-function widget_sandbox_rsslinks_control() {
-	$options = $newoptions = get_option('widget_sandbox_rsslinks');
-	if ( $_POST['rsslinks-submit'] ) {
-		$newoptions['title'] = strip_tags( stripslashes( $_POST['rsslinks-title'] ) );
-	}
-	if ( $options != $newoptions ) {
-		$options = $newoptions;
-		update_option( 'widget_sandbox_rsslinks', $options );
-	}
-	$title = esc_attr($options['title']);
-?>
-	<p><label for="rsslinks-title"><?php _e( 'Title:', 'satorii' ) ?> <input class="widefat" id="rsslinks-title" name="rsslinks-title" type="text" value="<?php echo $title; ?>" /></label></p>
-	<input type="hidden" id="rsslinks-submit" name="rsslinks-submit" value="1" />
-<?php
-}
-
-// Widgets plugin: intializes the plugin after the widgets above have passed snuff
-function sandbox_widgets_init() {
-
-	// Formats the Sandbox widgets, adding readability-improving whitespace
-	$p = array(
-		'before_widget'  =>   "\n\t\t\t" . '<li id="%1$s" class="widget %2$s">',
-		'after_widget'   =>   "\n\t\t\t</li>\n",
-		'before_title'   =>   "\n\t\t\t\t". '<h3 class="widgettitle">',
-		'after_title'    =>   "</h3>\n"
-	);
-
-	// Table for how many? Two? This way, please.
-	register_sidebars( 3, $p );
-
-	// Finished intializing Widgets plugin, now let's load the Sandbox default widgets; first, Sandbox search widget
-	$widget_ops = array(
-		'classname'    =>  'widget_search',
-		'description'  =>  __( "A search form for your blog (Sandbox)", "sandbox" )
-	);
-	wp_register_sidebar_widget( 'search', __( 'Search', 'satorii' ), 'widget_sandbox_search', $widget_ops );
-	wp_unregister_widget_control('search'); // We're being Sandbox-specific; remove WP default
-	wp_register_widget_control( 'search', __( 'Search', 'satorii' ), 'widget_sandbox_search_control' );
-
-	// Sandbox Meta widget
-	$widget_ops = array(
-		'classname'    =>  'widget_meta',
-		'description'  =>  __( "Log in/out and administration links (Sandbox)", "sandbox" )
-	);
-	wp_register_sidebar_widget( 'meta', __( 'Meta', 'satorii' ), 'widget_sandbox_meta', $widget_ops );
-	wp_unregister_widget_control('meta'); // We're being Sandbox-specific; remove WP default
-	wp_register_widget_control( 'meta', __( 'Meta', 'satorii' ), 'wp_widget_meta_control' );
-
-	//Sandbox RSS Links widget
-	$widget_ops = array(
-		'classname'    =>  'widget_rss_links',
-		'description'  =>  __( "RSS links for both posts and comments (Sandbox)", "sandbox" )
-	);
-	wp_register_sidebar_widget( 'rss_links', __( 'RSS Links', 'satorii' ), 'widget_sandbox_rsslinks', $widget_ops );
-	wp_register_widget_control( 'rss_links', __( 'RSS Links', 'satorii' ), 'widget_sandbox_rsslinks_control' );
-}
-
 function satorii_list_comments($comment, $args, $depth) { // Enables threaded comments (WordPress 2.7 or higher)
 	$GLOBALS['comment'] = $comment; ?>
 						<li id="comment-<?php comment_ID() ?>" <?php comment_class('yui-gf fw') ?>>
@@ -345,6 +212,7 @@ class satorii{
 		add_action( 'comment_form_after', array($this, 'balance_comment_form') );
 		add_action( 'wp_footer', array($this, 'add_footer_credits') );
 		add_filter( 'post_gallery', array($this, 'filter_gallery'), 10, 2);
+		add_action( 'widgets_init', array($this, 'register_sidebars') );
 	}
 	public function add_footer_credits(){
 		echo '<p><strong>', bloginfo('name') ,'</strong> <a href="', bloginfo('rss2_url') ,'">(RSS)</a> + <strong>Satorii</strong> theme by <a href="'. self::theme_uri .'">Felipe Lav&iacute;n</a></p>';
@@ -376,14 +244,39 @@ class satorii{
 		 * Enable support for Post Formats.
 		 * See http://codex.wordpress.org/Post_Formats
 		 */
-		add_theme_support( 'post-formats', array(
-			'aside', 'image', 'video', 'quote', 'link', 'gallery',
+		// add_theme_support( 'post-formats', array(
+		// 	'aside', 'image', 'video', 'quote', 'link', 'gallery',
+		// ) );
+
+		add_theme_support( 'custom-background', array(
+			'default-color' => '#ffffff'
+		) );
+
+		add_theme_support( 'custom-header', array(
+			'width'       => 1170,
+			'height'      => 498,
+			'flex-width'  => true,
+			'flex-height' => false,
+			'header-text' => true,
+			'default-text-color' => '#000'
 		) );
 
 		// register nav menu locations
 		register_nav_menus( array(
 			'globalnav' => __('Main menu', 'satorii')
 		));
+	}
+	public function register_sidebars(){
+		// Formats the Satorii widgets, adding readability-improving whitespace
+		$p = array(
+			'before_widget'  =>   "\n\t\t\t" . '<li id="%1$s" class="widget %2$s">',
+			'after_widget'   =>   "\n\t\t\t</li>\n",
+			'before_title'   =>   "\n\t\t\t\t". '<h3 class="widgettitle">',
+			'after_title'    =>   "</h3>\n"
+		);
+
+		// Table for how many? Two? This way, please.
+		register_sidebars( 3, $p );
 	}
 	public function enqueue_assets(){
 		// enqueue styles
@@ -453,17 +346,19 @@ class satorii{
 
 		$columns    = intval( $atts['columns'] );
 		$col_class  = 24 / $columns;
+		$colclasssm = $columns - 1 > 0 ? 24 / ( $columns - 1 ) : 1;
 		$selector   = "gallery-{$instance}";
 		$size_class = sanitize_html_class( $atts['size'] );
 		$out        = "<div id='$selector' class='gallery galleryid-{$id} gallery-columns-{$columns} gallery-size-{$size_class}'>";
 		$i          = 0;
 		$attachs_q  = count( $attachments );
 
-		foreach ( $attachments as $id => $attachment ) {
-			if ( $i%$columns === 0 ) {
 				$out .= '<div class="row">';
-			}
-			$out .= '<div class="col-md-'. $col_class .'">';
+		foreach ( $attachments as $id => $attachment ) {
+			// if ( $i%$columns === 0 ) {
+			// 	$out .= '<div class="row">';
+			// }
+			$out .= '<div class="col-md-'. $col_class .' col-sm-'. $colclasssm .'">';
 				$out .= '<figure class="thumbnail">';
 				if ( ! empty( $atts['link'] ) && 'file' === $atts['link'] ) {
 					$out .= wp_get_attachment_link( $id, $atts['size'], false, false, false, $attr );
@@ -476,12 +371,13 @@ class satorii{
 			$out .= '</div>';
 
 
-			if ( $i%$columns === $columns - 1 || $i + 1 === $attachs_q ) {
-				$out .= '</div><!--.row-->';
-			}
+			// if ( $i%$columns === $columns - 1 || $i + 1 === $attachs_q ) {
+			// 	$out .= '</div><!--.row-->';
+			// }
 
 			++$i;
 		}
+				$out .= '</div><!--.row-->';
 
 		$out .= "</div>";
 		return $out;
