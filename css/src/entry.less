@@ -1,9 +1,15 @@
-.entry{
-
+.custom-background .entry .row{
+	background: rgba(255, 255, 255, 0.75);
+}
+.entry + .entry{
+	margin-top: 2em;
 }
 .entry-content{
 	font-size: 15px;
 	line-height: 24px;
+	a{
+		text-decoration: underline;
+	}
 	.alignleft{
 		float: left;
 		margin: 0 1em 0 0;
@@ -34,6 +40,7 @@
 .entry-meta{
 	font-size: 13px;
 	line-height: 18px;
+	color: @gray-light;
 	dt{
 		font-weight: bold;
 		color: @gray-lightish;
@@ -63,6 +70,36 @@
 				left: -.75em;
 				top: 35%;
 			}
+		}
+	}
+}
+@media screen and ( max-width: @screen-sm-max ){
+	.entry-meta{
+		dt,
+		dd,
+		ul{
+			display: inline-block;
+		}
+		dd:after{
+			content: '. ';
+		}
+		ul, dd{
+			padding: 0;
+			margin: 0;
+		}
+		li{
+			display: inline;
+		}
+		ul li:before{
+			display: none;
+		}
+		li + li:before{
+			display: inline;
+			position: relative;
+			left: -1px;
+			top: 0;
+			background-color: transparent;
+			content: ', ';
 		}
 	}
 }
