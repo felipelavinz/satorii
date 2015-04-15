@@ -353,7 +353,7 @@ class satorii{
 		$i          = 0;
 		$attachs_q  = count( $attachments );
 
-				$out .= '<div class="row">';
+		$out .= '<div class="row">';
 		foreach ( $attachments as $id => $attachment ) {
 			// if ( $i%$columns === 0 ) {
 			// 	$out .= '<div class="row">';
@@ -377,7 +377,7 @@ class satorii{
 
 			++$i;
 		}
-				$out .= '</div><!--.row-->';
+		$out .= '</div><!--.row-->';
 
 		$out .= "</div>";
 		return $out;

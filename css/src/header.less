@@ -5,6 +5,9 @@
 	line-height: 12px;
 	text-transform: uppercase;
 }
+#page-header .has-background{
+	height: 498px;
+}
 .globalnav{
 	margin: 2em 0;
 	text-align: center;
@@ -41,7 +44,7 @@
 	}
 	#page-header{
 		background: @gray-lighter;
-		box-shadow: 0 3px 3px rgba(0, 0, 0, 0.25);
+		box-shadow: 0 3px 3px rgba(0, 0, 0, 0.75);
 	}
 	#blog-title{
 		font-size: 20px;
@@ -51,6 +54,7 @@
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
+		transform: all .5s;
 		a{
 			color: lighten(@gray-base, 13%);
 		}
