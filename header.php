@@ -22,7 +22,7 @@
 <body <?php body_class() ?>>
 <div id="wrapper" class="hfeed">
 	<div id="inner-wrap">
-		<?php empty( get_custom_header()->url ) ? get_template_part('parts/title-header') : get_template_part('parts/title-header', 'custom') ?>
+		<?php satorii_get_theme_use('custom-header-image') ? get_template_part('parts/title-header', 'custom') : get_template_part('parts/title-header') ?>
 		<div id="access">
 			<div class="sr-only sr-only-focusable skip-link"><a href="#content" title="<?php _e( 'Skip to content', 'satorii' ) ?>"><?php _e( 'Skip to content', 'satorii' ) ?></a></div>
 			<button type="button" id="globalnav-toggle" class="navbar-toggle visible-xs" data-target="#globalnav">
