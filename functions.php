@@ -189,6 +189,9 @@ class satorii{
 	private $template_uri;
 	const theme_ver = 1.5;
 	const theme_uri = 'http://www.yukei.net';
+	private $default_background_color = 'ffffff';
+	private $default_header_text_color = '000000';
+	private $body_classes = null;
 	private function __construct(){
 		$this->setup_hooks();
 		$this->template_uri = get_stylesheet_directory_uri();
@@ -213,10 +216,52 @@ class satorii{
 		add_action( 'wp_footer', array($this, 'add_footer_credits') );
 		add_filter( 'post_gallery', array($this, 'filter_gallery'), 10, 2);
 		add_action( 'widgets_init', array($this, 'register_sidebars') );
+		add_filter( 'body_class', array($this, 'filter_body_class') );
+
+		// @todo create action to print the header_textcolor css and other customizer-generated code
+	}
+	public function filter_body_class( $classes ){
+		$mods = get_theme_mods();
+
+		// using a custom background color
+		if ( ! empty($mods['background_color']) && $mods['background_color'] !== $this->get_default_background_color() ) {
+			$classes[] = 'satorii-uses-custom-background-color';
+		}
+
+		// using a custom background image
+		if ( ! empty($mods['background_image']) ) {
+			$classes[] = 'satorii-uses-custom-background-image';
+		}
+
+		if ( ! empty($mods['header_textcolor']) ) {
+			if ( $mods['header_textcolor'] === 'blank' ) {
+				// hide header text
+				$classes[] = 'satorii-uses-hidden-header-text';
+			} elseif ( $mods['header_textcolor'] !== $this->get_default_header_text_color() ) {
+				// ... or using a custom color
+				$classes[] = 'satorii-uses-custom-header-textcolor';
+			}
+		}
+
+		// using header image
+		if ( ! empty($mods['header_image']) && $mods['header_image'] !== 'remove-header' ) {
+			$classes[] = 'satorii-uses-custom-header-image';
+		}
+
+		return $classes;
 	}
 	public function add_footer_credits(){
 		echo '<p><strong>', bloginfo('name') ,'</strong> <a href="', bloginfo('rss2_url') ,'">(RSS)</a> + <strong>Satorii</strong> theme by <a href="'. self::theme_uri .'">Felipe Lav&iacute;n</a></p>';
 	}
+
+	public function get_default_background_color(){
+		return apply_filters('satorii_default_background_color', $this->default_background_color);
+	}
+
+	public function get_default_header_text_color(){
+		return apply_filters('satorii_default_header_text_color', $this->default_header_text_color);
+	}
+
 	public function setup_theme(){
 		// Translate, if applicable
 		load_theme_textdomain( 'satorii', dirname( __FILE__ ) .'/translation' );
@@ -249,16 +294,16 @@ class satorii{
 		// ) );
 
 		add_theme_support( 'custom-background', array(
-			'default-color' => '#ffffff'
+			'default-color' => $this->get_default_background_color()
 		) );
 
 		add_theme_support( 'custom-header', array(
 			'width'       => 1170,
-			'height'      => 498,
+			'height'      => 438,
 			'flex-width'  => true,
 			'flex-height' => false,
 			'header-text' => true,
-			'default-text-color' => '#000'
+			'default-text-color' => $this->get_default_header_text_color()
 		) );
 
 		// register nav menu locations
@@ -382,6 +427,23 @@ class satorii{
 		$out .= "</div>";
 		return $out;
 	}
+	public function get_theme_use( $feature ){
+		if ( ! $this->body_classes ) {
+			$this->body_classes = (array) get_body_class();
+		}
+
+		// custom-header
+		// custom-background-(color|image)
+		// hidden-header-text
+		// custom-header-textcolor
+		$feature_test = 'satorii-uses-'. $feature;
+		return in_array( $feature_test, $this->body_classes );
+	}
 }
 // Instantiate the class object
 $satorii = satorii::get_instance();
+
+function satorii_get_theme_use( $feature ){
+	global $satorii;
+	return $satorii->get_theme_use( $feature );
+}
