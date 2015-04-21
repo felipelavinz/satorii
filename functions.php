@@ -213,10 +213,10 @@ class satorii{
 		add_action( 'after_setup_theme', array($this, 'setup_theme') );
 		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_assets') );
 		add_action( 'comment_form_after', array($this, 'balance_comment_form') );
-		add_action( 'wp_footer', array($this, 'add_footer_credits') );
 		add_filter( 'post_gallery', array($this, 'filter_gallery'), 10, 2);
 		add_action( 'widgets_init', array($this, 'register_sidebars') );
 		add_filter( 'body_class', array($this, 'filter_body_class') );
+		add_action( 'satorii_theme_footer', array($this, 'add_footer_credits') );
 
 		// @todo create action to print the header_textcolor css and other customizer-generated code
 	}
@@ -411,6 +411,11 @@ class satorii{
 					$out .= wp_get_attachment_image( $id, $atts['size'], false, $attr );
 				} else {
 					$out .= wp_get_attachment_link( $id, $atts['size'], true, false, false, $attr );
+				}
+				if ( ! empty( $attachment->post_excerpt) ) {
+					$out .= '<figcaption>';
+						$out .= esc_html( $attachment->post_excerpt );
+					$out .= '</figcaption>';
 				}
 				$out .= '</figure>';
 			$out .= '</div>';
