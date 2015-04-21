@@ -436,19 +436,82 @@ class satorii{
 		if ( ! $this->body_classes ) {
 			$this->body_classes = (array) get_body_class();
 		}
-
-		// custom-header
-		// custom-background-(color|image)
-		// hidden-header-text
-		// custom-header-textcolor
 		$feature_test = 'satorii-uses-'. $feature;
 		return in_array( $feature_test, $this->body_classes );
+	}
+	public static function the_category( $separator = '', $parents='', $post_id = false ){
+		add_filter('get_the_categories', array(__CLASS__, '_filter_get_the_categories'));
+		$categories = get_the_category_list( $separator, $parents, $post_id );
+		remove_filter('get_the_categories', array(__CLASS__, '_filter_get_the_categories'));
+		return $categories;
+	}
+	public static function _filter_get_the_categories( $categories ){
+		$max_categories = apply_filters('satorii_max_categories', 5);
+		$max_categories = absint( $max_categories );
+		$orderby = apply_filters('satorii_categories_orderby', 'count');
+		$orderby = in_array( $orderby, array('count', 'name', 'rand'));
+		switch ( $orderby ) {
+			case 'count':
+				usort( $categories, array( __CLASS__, 'order_categories_by_count') );
+				break;
+			case 'name':
+				// no need to do anything; $categories is already ordered by name
+				break;
+			case 'rand':
+				shuffle( $categories );
+				break;
+		}
+		$sliced = array_slice( $categories, 0, $max_categories );
+		// no matter how we selected the categories we're going to display, we'll keep
+		// the alphabetical order to be consistent with posts with fewer categories
+		usort( $sliced, array( __CLASS__, 'order_categories_by_name') );
+		return $sliced;
+	}
+	private static function order_categories_by_count( $a, $b ){
+		if ( $a->count > $b->count ) {
+			return 1;
+		} elseif ( $a->count < $b->count ) {
+			return -1;
+		}
+		return 0;
+	}
+	private static function order_categories_by_name( $a, $b ){
+		return strnatcasecmp( $a->name, $b->name );
 	}
 }
 // Instantiate the class object
 $satorii = satorii::get_instance();
 
+/**
+ * Check if theme customizations are being in use
+ *
+ *	Available checks:
+ *	- custom-header
+ *	- custom-background-color
+ *	- custom-background-image
+ *	- hidden-header-text
+ *	- custom-header-textcolor
+ *
+ * @param  string $feature The customization to check
+ * @return bool            True if the customization is being used
+ * @uses   satorii::get_theme_use()
+ * @author Felie Lavín <felipe@yukei.net>
+ * @since  1.0.0
+ */
 function satorii_get_theme_use( $feature ){
 	global $satorii;
-	return $satorii->get_theme_use( $feature );
+	return (bool) $satorii->get_theme_use( $feature );
+}
+
+/**
+ * Get a limited list of post categories
+ * @param string $separator Optional, default is empty string. Separator for between the categories.
+ * @param string $parents Optional. How to display the parents.
+ * @param int $post_id Optional. Post ID to retrieve categories.
+ * @return string       HTML list of post categories
+ * @uses get_the_category_list()
+ * @uses satorii::post_categories();
+ */
+function satorii_the_category( $separator = '', $parents='', $post_id = false ){;
+	echo satorii::the_category( $separator, $parents, $post_id );
 }

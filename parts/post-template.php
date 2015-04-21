@@ -21,7 +21,7 @@
 					<dd class="author vcard"><?php printf( __( 'By %s', 'satorii' ), '<a itemprop="author" class="url fn n" href="' . get_author_posts_url( $post->post_author ) . '" title="' . sprintf( __( 'View all posts by %s', 'satorii' ), $authordata->display_name ) . '">' . get_the_author() . '</a>' ) ?></dd>
 				<dt><?php _e('Categories:', 'satorii')?></dt>
 					<dd class="cat-links" itemprop="articleSection">
-					<?php the_category(); ?>
+					<?php satorii_the_category(); ?>
 					</dd>
 				<dt><?php _e('Comments:', 'satorii')?></dt>
 					<dd class="comments-link" itemprop="commentCount"><?php comments_popup_link( __( 'None', 'satorii' ), __( '1 Comment', 'satorii' ), __( '% Comments', 'satorii' ) ) ?></dd>
