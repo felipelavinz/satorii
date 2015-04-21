@@ -1,0 +1,70 @@
+.widget-title{
+	font-family: @font-family-sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: bold;
+	color: @satorii-widget-title;
+}
+.widget{
+	list-style: none;
+	overflow: hidden;
+	font-size: 13px;
+	line-height: 18px;
+	color: @gray;
+	ul, ol{
+		padding-left: 1.5em;
+	}
+	ul > li{
+		list-style-type: square;
+	}
+	li{
+		margin-bottom: 3px;
+		& > ul,
+		& > ol{
+			margin-top: 3px;
+		}
+	}
+	img{
+		max-width: 100%;
+		height: auto;
+	}
+}
+
+// some styles for default widgets
+.widget_calendar{
+	table{
+		caption,
+		thead{
+			text-transform: uppercase;
+			font-weight: bold;
+		}
+		th, td{
+			padding: 10px;
+			text-align: center;
+		}
+		thead th,
+		tfoot td{
+			background: @satorii-widget-list-link;
+			color: #fff;
+		}
+		tbody {
+			tr:nth-child(odd) td{
+				background: #F7F4EE;
+			}
+			a{
+				font-weight: bold;
+			}
+		}
+		tfoot{
+			a{
+				color: #fff;
+			}
+		}
+		#prev{
+			text-align: left;
+		}
+		#next{
+			text-align: right
+		}
+	}
+}
