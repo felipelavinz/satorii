@@ -169,11 +169,6 @@ function satorii_page_nav($echo=true){
 	else return $out;
 }
 
-
-
-// Runs our code at the end to check that everything needed has loaded
-add_action( 'init', 'sandbox_widgets_init' );
-
 // Adds filters for the description/meta content in archives.php
 add_filter( 'archive_meta', 'wptexturize' );
 add_filter( 'archive_meta', 'convert_smilies' );
@@ -316,7 +311,7 @@ class satorii{
 		$p = array(
 			'before_widget'  =>   "\n\t\t\t" . '<li id="%1$s" class="widget %2$s">',
 			'after_widget'   =>   "\n\t\t\t</li>\n",
-			'before_title'   =>   "\n\t\t\t\t". '<h3 class="widgettitle">',
+			'before_title'   =>   "\n\t\t\t\t". '<h3 class="widget-title">',
 			'after_title'    =>   "</h3>\n"
 		);
 
@@ -406,11 +401,11 @@ class satorii{
 			$out .= '<div class="col-md-'. $col_class .' col-sm-'. $colclasssm .'">';
 				$out .= '<figure class="thumbnail">';
 				if ( ! empty( $atts['link'] ) && 'file' === $atts['link'] ) {
-					$out .= wp_get_attachment_link( $id, $atts['size'], false, false, false, $attr );
+					$out .= wp_get_attachment_link( $id, $atts['size'], false, false, false );
 				} elseif ( ! empty( $atts['link'] ) && 'none' === $atts['link'] ) {
-					$out .= wp_get_attachment_image( $id, $atts['size'], false, $attr );
+					$out .= wp_get_attachment_image( $id, $atts['size'], false );
 				} else {
-					$out .= wp_get_attachment_link( $id, $atts['size'], true, false, false, $attr );
+					$out .= wp_get_attachment_link( $id, $atts['size'], true, false, false );
 				}
 				if ( ! empty( $attachment->post_excerpt) ) {
 					$out .= '<figcaption>';
