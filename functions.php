@@ -156,15 +156,25 @@ function satorii_list_pings($comment, $args, $depth) { // Uses the new functions
 							<div class="trackback-text"><?php comment_text() ?></div>
 <?php } // REFERENCE: function satorii_list_pings()
 
-function satorii_page_nav($echo=true){
+function satorii_page_nav( $echo = true ) {
 	global $post;
-	$ancestors = $post->ancestors;
+	$out         = '';
+	$ancestors   = $post->ancestors;
 	$ancestors_q = count($ancestors);
-	$urvater = ( $ancestors_q === 0 ) ? $post->ID : end($ancestors);
+	$urvater     = ( $ancestors_q === 0 ) ? $post->ID : end($ancestors);
 	// If this is a top-level page, we'll show it's children; otherwhise we'll show
 	// current top-level forefather's children
-	$menu = substr(wp_list_pages('sort_column=menu_order&child_of=' . $urvater .'&echo=0&title_li=<h3 class="page-links-title">' . get_the_title($urvater) . '</h3>'), 20, -5);
-	$out = !empty($menu) ? '<div class="page-meta">'. $menu .'</div>' : null;
+	$menu = wp_list_pages('sort_column=menu_order&child_of=' . $urvater .'&echo=0&title_li=');
+	if ( ! empty($menu) ) {
+		$out .= '<div class="page-meta">';
+			$out .= '<div class="page-hierarchy-nav">';
+				$out .= '<h3 class="page-meta-title page-links-title"><a href="'. get_permalink( $urvater ) .'">'. get_the_title( $urvater ) .'</a></h3>';
+				$out .= '<nav>';
+					$out .= '<ul>'. $menu .'</ul>';
+				$out .= '</nav>';
+			$out .= '</div>';
+		$out .= '</div>';
+	}
 	if ( $echo ) echo $out;
 	else return $out;
 }
