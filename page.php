@@ -1,17 +1,9 @@
 <?php get_header() ?>
 	<div id="container">
-		<div id="content">
+		<div id="content" class="container">
 		<?php the_post() ?>
-			<div id="post-<?php the_ID() ?>" <?php post_class() ?>>
-				<h2 class="entry-title"><?php the_title() ?></h2>
-				<div class="entry-content">
-					<?php the_content() ?>
-					<?php wp_link_pages('before=<div class="page-link">' . __( 'Pages:', 'satorii' ) . '&after=</div>') ?>
-					<?php edit_post_link( __( 'Edit', 'satorii' ), '<span class="edit-link">', '</span>' ) ?>
-				</div>
-				<?php satorii_page_nav(); ?>
-			</div><!-- .post -->
-			<?php comments_template() ?>
+			<?php get_template_part('parts/page-template'); ?>
 		</div><!-- #content -->
+		<?php comments_template() ?>
 	</div><!-- #container -->
 <?php get_footer() ?>

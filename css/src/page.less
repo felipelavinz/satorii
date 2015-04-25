@@ -1,0 +1,44 @@
+.page-meta{
+	padding: 1em;
+	font-size: 12px;
+	line-height: 18px;
+	border: 1px solid #f0f0f0;
+	background: #f9f9f9;
+	.page-meta-title{
+		margin-top: 0;
+		font-size: 14px;
+		font-family: @font-family-sans-serif;
+		font-weight: bold;
+		a{
+			color: @gray;
+		}
+	}
+}
+.page-hierarchy-nav{
+	ul{
+		padding-left: 1.25em;
+		li {
+			list-style-type: square;
+			color: #c90;
+			margin-bottom: .25em;
+			a{
+				color: @gray-lightish;
+				text-decoration: none;
+				&:hover{
+					color: #000;
+					text-decoration: underline;
+				}
+			}
+			& > ul {
+				margin-top: .25em;
+			}
+			li {
+				color: #999;
+			}
+		}
+		.current_page_item a{
+			color: #000;
+			font-weight: bold;
+		}
+	}
+}
