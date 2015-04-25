@@ -1,3 +1,26 @@
+/* Sticky footer */
+html, body{
+	height: 100%;
+}
+#wrapper{
+	// background: #EEEEDC;
+	min-height: 100%;
+	margin-bottom: -66px;
+	&:after{
+		content:  '';
+		display: block;
+	}
+}
+#inner-wrap{
+	background: #fff;
+}
+#page-footer, #wrapper:after{
+	height: 66px;
+}
+#page-footer{
+	background: #EEEEDC;
+}
+
 h1, h2, h3, h4, h5, h6{
 	a{
 		color: #000;
