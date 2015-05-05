@@ -8,7 +8,7 @@
 	<div class="row">
 		<div class="col-md-13 col-md-push-5 col-md-offset-3 col-sm-19 col-sm-push-5">
 			<div class="entry-content" itemprop="articleBody">
-<?php the_content( __( 'Read More <span class="meta-nav">&raquo;</span>', 'satorii' ) ) ?>
+<?php the_content( sprintf( __( 'Keep reading <span class="sr-only">%s</span> <span class="meta-nav">&raquo;</span>', 'satorii' ), get_the_title() ) ); ?>
 			</div>
 			<?php wp_link_pages('before=<div class="page-link pagination">' . __( 'Pages:', 'satorii' ) . '&after=</div>') ?>
 			<?php the_tags( __( '<p class="tag-links"><span>Tagged:</span> <span itemprop="keywords">', 'satorii' ), ', ', '</span></p>') ?>
