@@ -1,8 +1,20 @@
-.custom-background .entry .row{
-	background: rgba(255, 255, 255, 0.75);
+// ... not particularly nice
+// .custom-background .entry .row{
+// 	background: rgba(255, 255, 255, 0.75);
+// }
+.entry{
+	.dashicons{
+		vertical-align: middle;
+		color: @gray-tinted;
+	}
 }
 .entry + .entry{
 	margin-top: 2em;
+}
+.entry-title{
+	.comments-link{
+		font-size: 16px;
+	}
 }
 .entry-content{
 	font-size: 15px;
@@ -32,6 +44,10 @@
 	table{
 		.table();
 	}
+}
+.entry-summary{
+	font-size: 15px;
+	line-height: 24px;
 }
 .gallery{
 	img{
@@ -77,6 +93,27 @@
 				left: -.75em;
 				top: 35%;
 			}
+		}
+	}
+}
+.tax-links, .edit-link{
+	font-size: 11px;
+	line-height: 18px;
+	color: @gray;
+	.dashicons{
+		font-size: 16px;
+		position: relative;
+		top: 1px;
+	}
+	.taxonomy{
+		font-weight: bold;
+	}
+	a{
+		border-bottom: 1px solid @gray-lighter;
+		transition: all .2s;
+		&:hover{
+			color: #000;
+			text-decoration: none;
 		}
 	}
 }

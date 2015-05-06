@@ -1,4 +1,4 @@
-<div id="page-header">
+<div id="site-header">
 	<div class="container">
 	<?php if ( ! satorii_get_theme_use('hidden-header-text') ) : ?>
 		<h1 id="blog-title"><span><a href="<?php echo home_url() ?>/" title="<?php echo esc_attr( get_bloginfo('name') ) ?>" rel="home"><?php bloginfo('name') ?></a></span></h1>

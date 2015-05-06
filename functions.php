@@ -222,6 +222,7 @@ class satorii{
 		add_action( 'widgets_init', array($this, 'register_sidebars') );
 		add_filter( 'body_class', array($this, 'filter_body_class') );
 		add_action( 'satorii_theme_footer', array($this, 'add_footer_credits') );
+		add_filter( 'excerpt_more', array($this, 'filter_excerpt_more') );
 
 		// @todo create action to print the header_textcolor css and other customizer-generated code
 	}
@@ -265,6 +266,10 @@ class satorii{
 
 	public function get_default_header_text_color(){
 		return apply_filters('satorii_default_header_text_color', $this->default_header_text_color);
+	}
+
+	public function filter_excerpt_more( $more_text = '' ){
+		return _x('&hellip;', 'excerpt ellipsis', 'satorii');
 	}
 
 	public function setup_theme(){

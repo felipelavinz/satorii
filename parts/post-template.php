@@ -11,7 +11,7 @@
 <?php the_content( sprintf( __( 'Keep reading <span class="sr-only">%s</span> <span class="meta-nav">&raquo;</span>', 'satorii' ), get_the_title() ) ); ?>
 			</div>
 			<?php wp_link_pages('before=<div class="page-link pagination">' . __( 'Pages:', 'satorii' ) . '&after=</div>') ?>
-			<?php the_tags( __( '<p class="tag-links"><span>Tagged:</span> <span itemprop="keywords">', 'satorii' ), ', ', '</span></p>') ?>
+			<?php the_tags( __( '<p class="tag-links tax-links"><i class="dashicons dashicons-tag"></i><span class="taxonomy">Tagged:</span> <span itemprop="keywords">', 'satorii' ), ', ', '</span></p>') ?>
 		</div>
 		<div class="col-md-5 col-md-pull-13 col-sm-5 col-sm-pull-19">
 			<dl class="entry-meta">

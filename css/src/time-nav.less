@@ -21,4 +21,33 @@
 			text-decoration: none;
 		}
 	}
+	&.paginated{
+		text-align: center;
+		a, span{
+			display: inline-block;
+			padding: 1em 1.5em;
+		}
+		a{
+			&:hover{
+				background: #EBEADE;
+			}
+		}
+		.current{
+			font-weight: bold;
+			background: darken(#e1e0d0, 10%);
+		}
+		.prev{
+			float: left;
+		}
+		.next{
+			float: right;
+		}
+	}
+}
+@media screen and ( max-width: @screen-sm-max ){
+	#nav-below.paginated{
+		.prev{
+			display: none;
+		}
+	}
 }
