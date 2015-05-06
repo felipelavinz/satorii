@@ -21,7 +21,7 @@ endwhile; ?>
 		</div>
 	<?php else: ?>
 			<div id="post-0" class="post no-results not-found">
-				<h2 class="entry-title"><?php _e( 'Nothing Found', 'satorii' ) ?></h2>
+				<h1 class="page-title"><?php _e( 'Nothing Found', 'satorii' ) ?></h1>
 				<div class="entry-content">
 					<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'satorii' ) ?></p>
 				</div>
