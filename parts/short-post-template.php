@@ -36,7 +36,7 @@
 			<div class="entry-summary" itemprop="description">
 				<?php the_excerpt( ); ?>
 			</div>
-			<?php wp_link_pages('before=<div class="page-link pagination">' . __( 'Pages:', 'satorii' ) . '&after=</div>') ?>
+			<?php wp_link_pages('before=<p class="page-link pagination">' . __( 'Pages:', 'satorii' ) . '&after=</p>') ?>
 			<?php the_tags( __( '<p class="tag-links tax-links"><i class="dashicons dashicons-tag"></i><span taxonomy>Tagged:</span> <span itemprop="keywords">', 'satorii' ), ', ', '</span></p>') ?>
 		</div>
 		<?php endif; ?>
