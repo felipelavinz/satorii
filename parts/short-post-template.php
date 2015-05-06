@@ -18,7 +18,7 @@
 			<div class="entry-summary" itemprop="description">
 				<?php the_excerpt( ); ?>
 			</div>
-			<?php wp_link_pages('before=<div class="page-link pagination">' . __( 'Pages:', 'satorii' ) . '&after=</div>') ?>
+			<?php wp_link_pages('before=<p class="page-link pagination">' . __( 'Pages:', 'satorii' ) . '&after=</p>') ?>
 			<p class="cat-links tax-links"><i class="dashicons dashicons-category"></i><span class="taxonomy"><?php _e('Categories:', 'satorii')?></span> <?php the_category(', ') ?></p>
 			<?php the_tags( __( '<p class="tag-links tax-links"><i class="dashicons dashicons-tag"></i><span class="taxonomy">Tagged:</span> <span itemprop="keywords">', 'satorii' ), ', ', '</span></p>') ?>
 			<?php edit_post_link( sprintf( __('Edit <span class="sr-only">%s</span>', 'satorii'), get_the_title() ) , '<p><span class="edit-link"><i class="dashicons dashicons-edit"></i>', '</span></p>');?>

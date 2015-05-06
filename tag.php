@@ -1,28 +1,20 @@
 <?php get_header() ?>
-
 	<div id="container">
-		<div id="content">
-
-			<h2 class="page-title"><?php _e( 'Tag Archives:', 'satorii' ) ?> <span><?php single_tag_title() ?></span></h2>
-
-			<div id="nav-above" class="navigation yui-g">
-				<div class="nav-previous yui-u first"><?php next_posts_link( __( '<span class="meta-nav">&laquo;</span> Older posts', 'satorii' ) ) ?></div>
-				<div class="nav-next yui-u"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&raquo;</span>', 'satorii' ) ) ?></div>
+		<div id="content" class="container">
+			<h1 class="page-title">
+				<?php echo sprintf( __('Tag Archives: %s', 'satorii'), '<span class="page-object">'. single_term_title('', false) .'</span>' ) ?>
+			</h1>
+			<?php if ( term_description() ) : ?>
+			<div class="archive-meta lead">
+				<?php echo apply_filters('the_content', term_description() ); ?>
 			</div>
-
+			<?php endif; ?>
+			<?php get_template_part('parts/nav-adjacent-above') ?>
 <?php while ( have_posts() ) : the_post();
-
-get_template_part('parts/short-post-template');
-
+	get_template_part('parts/short-post-template');
 endwhile; ?>
-
-			<div id="nav-below" class="navigation yui-g">
-				<div class="nav-previous yui-u first"><?php next_posts_link( __( '<span class="meta-nav">&laquo;</span> Older posts', 'satorii' ) ) ?></div>
-				<div class="nav-next yui-u"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&raquo;</span>', 'satorii' ) ) ?></div>
-			</div>
-
 		</div><!-- #content -->
+		<?php get_template_part('parts/nav-adjacent-below'); ?>
 	</div><!-- #container -->
-
 <?php get_sidebar() ?>
 <?php get_footer() ?>
