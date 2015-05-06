@@ -1,5 +1,5 @@
 <div id="sidebar-wrapper" class="container-fluid footer-sidebars">
-	<div class="row">
+	<div class="row" role="complementary">
 		<div id="primary" class="sidebar col-md-8">
 			<ul class="xoxo">
 	<?php if ( ! dynamic_sidebar(1) ) : // begin primary sidebar widgets ?>

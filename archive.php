@@ -1,6 +1,6 @@
 <?php get_header() ?>
 	<div id="container">
-		<div id="content" class="container">
+		<div id="content" class="container" role="main">
 <?php the_post() ?>
 <?php if ( is_day() ) : ?>
 			<h1 class="page-title"><?php printf( __( 'Daily Archives: <span class="page-object">%s</span>', 'satorii' ), get_the_time(get_option('date_format')) ) ?></h1>

@@ -22,14 +22,18 @@
 <body <?php body_class() ?>>
 <div id="wrapper" class="hfeed">
 	<div id="inner-wrap">
-		<?php satorii_get_theme_use('custom-header-image') ? get_template_part('parts/title-header', 'custom') : get_template_part('parts/title-header') ?>
-		<div id="access">
-			<div class="sr-only sr-only-focusable skip-link"><a href="#content" title="<?php _e( 'Skip to content', 'satorii' ) ?>"><?php _e( 'Skip to content', 'satorii' ) ?></a></div>
-			<button type="button" id="globalnav-toggle" class="navbar-toggle visible-xs" data-target="#globalnav">
-				<span class="sr-only">Toggle Navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<?php satorii_globalnav(); ?>
-		</div><!-- #access -->
+		<div role="banner">
+			<?php satorii_get_theme_use('custom-header-image') ? get_template_part('parts/title-header', 'custom') : get_template_part('parts/title-header') ?>
+			<div id="access">
+				<div class="sr-only sr-only-focusable skip-link"><a href="#content" title="<?php _e( 'Skip to content', 'satorii' ) ?>"><?php _e( 'Skip to content', 'satorii' ) ?></a></div>
+				<button type="button" id="globalnav-toggle" class="navbar-toggle visible-xs" data-target="#globalnav">
+					<span class="sr-only">Toggle Navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div role="navigation" aria-label="<?php esc_attr_e('Primary Navigation', 'satorii'); ?>">
+					<?php satorii_globalnav(); ?>
+				</div>
+			</div><!-- #access -->
+		</div>

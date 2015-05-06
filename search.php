@@ -1,6 +1,6 @@
 <?php get_header() ?>
 	<div id="container">
-		<div id="content" class="container">
+		<div id="content" class="container" role="main">
 		<?php if ( have_posts() ) : ?>
 			<div id="nav-above">
 				<div class="navigation sr-only row">

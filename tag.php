@@ -1,6 +1,6 @@
 <?php get_header() ?>
 	<div id="container">
-		<div id="content" class="container">
+		<div id="content" class="container" role="main">
 			<h1 class="page-title">
 				<?php echo sprintf( __('Tag Archives: %s', 'satorii'), '<span class="page-object">'. single_term_title('', false) .'</span>' ) ?>
 			</h1>

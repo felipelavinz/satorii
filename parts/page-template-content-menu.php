@@ -10,7 +10,7 @@
 		</div>
 		<?php wp_link_pages('before=<p class="page-link pagination">' . __( 'Pages:', 'satorii' ) . '&after=</p>') ?>
 	</div>
-	<div class="col-md-5 col-md-pull-13 col-sm-5 col-sm-pull-19">
+	<div class="col-md-5 col-md-pull-13 col-sm-5 col-sm-pull-19" role="navigation" aria-label="<?php esc_attr_e('Secondary Navigation', 'satorii'); ?>">
 		<?php satorii_page_nav(); ?>
 	</div>
 </div>

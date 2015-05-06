@@ -1,6 +1,6 @@
 <?php get_header() ?>
 	<div id="container">
-		<div id="content" class="container">
+		<div id="content" class="container" role="main">
 			<?php get_template_part('parts/nav-adjacent-above') ?>
 <?php while ( have_posts() ) : the_post();
 	get_template_part('parts/post-template');

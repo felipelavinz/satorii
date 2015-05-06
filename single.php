@@ -8,7 +8,9 @@
 					<div class="nav-next"><?php next_post_link( '%link', '%title <span class="meta-nav">&raquo;</span>' ) ?></div>
 				</div>
 			</div>
-			<?php get_template_part('parts/post-template'); ?>
+			<div role="main">
+				<?php get_template_part('parts/post-template'); ?>
+			</div>
 		</div><!-- #content -->
 		<div class="container-fluid">
 			<div id="nav-below" class="navigation row">
