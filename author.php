@@ -3,7 +3,7 @@
 		<div id="content" class="container" role="main">
 			<?php the_post() ?>
 			<h1 class="page-title author">
-				<?php printf( __( 'Author Archives: <span class="vcard">%s</span>', 'satorii' ), '<a class="url fn n" href="'. esc_url( $authordata->user_url ) .'" rel="me">'. $authordata->display_name .'</a>') ?>
+				<?php printf( __( 'Author Archives: <span class="vcard page-object">%s</span>', 'satorii' ), '<a class="url fn n" href="'. esc_url( $authordata->user_url ) .'" rel="me">'. $authordata->display_name .'</a>') ?>
 			</h1>
 			<?php $authordesc = $authordata->user_description; if ( !empty($authordesc) ) echo apply_filters( 'archive_meta', '<div class="archive-meta lead">' . $authordesc . '</div>' ); ?>
 
