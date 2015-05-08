@@ -26,7 +26,7 @@
 		<div class="col-md-5 col-md-pull-13 col-sm-5 col-sm-pull-19">
 			<dl class="entry-meta">
 				<dt><?php _e('Published:', 'satorii')?></dt>
-					<dd class="entry_date"><a itemprop="url" href="<?php the_permalink(); ?>" rel="bookmark"><time class="published" datetime="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php printf( __( '%1$s &#8211; %2$s', 'satorii' ), get_the_time( get_option('date_format') ), get_the_time() ) ?></time></a></dd>
+					<dd class="entry_date"><a itemprop="url" href="<?php the_permalink(); ?>" rel="bookmark"><time itemprop="datePublished" class="published" datetime="<?php the_time('Y-m-d\TH:i:sO') ?>"><?php printf( __( '%1$s &#8211; %2$s', 'satorii' ), get_the_time( get_option('date_format') ), get_the_time() ) ?></time></a></dd>
 				<dt><?php _e('Author:', 'satorii')?></dt>
 					<dd class="author vcard"><?php printf( __( 'By %s', 'satorii' ), '<a itemprop="author" class="url fn n" href="' . get_author_posts_url( $post->post_author ) . '" title="' . sprintf( __( 'View all posts by %s', 'satorii' ), $authordata->display_name ) . '">' . get_the_author() . '</a>' ) ?></dd>
 			</dl>
