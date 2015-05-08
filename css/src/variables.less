@@ -192,19 +192,23 @@
 //** Text color for `<input>`s
 @input-color:                    @gray;
 //** `<input>` border color
-@input-border:                   #ccc;
+// @input-border:                   #ccc;
+@input-border:                   lighten( @gray-tinted, 35%);
 
 // TODO: Rename `@input-border-radius` to `@input-border-radius-base` in v4
 //** Default `.form-control` border radius
 // This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
-@input-border-radius:            @border-radius-base;
+// @input-border-radius:            @border-radius-base;
+@input-border-radius:            3px;
 //** Large `.form-control` border radius
-@input-border-radius-large:      @border-radius-large;
+// @input-border-radius-large:      @border-radius-large;
+@input-border-radius-large:      3px;
 //** Small `.form-control` border radius
-@input-border-radius-small:      @border-radius-small;
+// @input-border-radius-small:      @border-radius-small;
+@input-border-radius-small:      3px;
 
 //** Border color for inputs on focus
-@input-border-focus:             #8A7650;
+@input-border-focus:             lighten( #8A7650, 25% );
 
 //** Placeholder text color
 @input-color-placeholder:        @gray-tinted;
