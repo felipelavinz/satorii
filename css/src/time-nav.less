@@ -44,6 +44,45 @@
 		}
 	}
 }
+.nav-images{
+	a{
+		position: relative;
+		display: inline-block;
+		&:before{
+			font-family: 'dashicons';
+			content: "\f341";
+			color: #fff;
+			font-size: 96px;
+			line-height: 150px;
+			height: 150px;
+			display: block;
+			width: 100%;
+			text-align: center;
+			position: absolute;
+			top: 0;
+			#gradient .radial( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5) );
+			transition: all .3s;
+		}
+		&:hover:before{
+			padding-right: 25px;
+		}
+	}
+	.next{
+		a{
+			&:before{
+				content: "\f345";
+				right: 0;
+			}
+			&:hover:before{
+				padding-right: 0;
+				padding-left: 25px;
+			}
+		}
+	}
+	a:hover:before{
+		opacity: 0.35;
+	}
+}
 @media screen and ( max-width: @screen-sm-max ){
 	#nav-below.paginated{
 		.prev{
